@@ -1,21 +1,13 @@
 package com.hicc.nagne_backend.domain.trip.domain.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import com.hicc.nagne_backend.common.domain.BaseTimeEntity;
-import com.hicc.nagne_backend.domain.user.domain.User;
-
+import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Entity
 @Getter
