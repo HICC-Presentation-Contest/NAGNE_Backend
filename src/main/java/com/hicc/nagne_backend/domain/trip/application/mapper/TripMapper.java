@@ -2,7 +2,6 @@ package com.hicc.nagne_backend.domain.trip.application.mapper;
 
 import com.hicc.nagne_backend.domain.trip.application.dto.response.TripResponse;
 import com.hicc.nagne_backend.domain.trip.domain.entity.Trip;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -17,4 +16,5 @@ public class TripMapper {
 				.title(trip.getTitle())
 				.build();
 	}
+
 }

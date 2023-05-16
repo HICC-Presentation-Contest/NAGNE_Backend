@@ -1,4 +1,4 @@
-package com.hicc.nagne_backend.domain.user.domain;
+package com.hicc.nagne_backend.domain.user.domain.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
