@@ -49,15 +49,15 @@ jobs:
         uses: appleboy/ssh-action@master
         id: deploy-prob
         with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.EC2_KEY }}
-        envs: GITHUB_SHA
-        script: |
-          touch ./docker-compose.yml
-          echo "${{ secrets.DOCKER_COMPOSE }}" > ./docker-compose.yml
-          docker stop ${{ secrets.DOCKER_REPO }}
-          docker rm ${{ secrets.DOCKER_REPO }} 
-          sudo docker pull ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPO }} 
-          docker-compose up -d
-          docker rmi -f $(docker images -f "dangling=true" -q)
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          envs: GITHUB_SHA
+          script: |
+            touch ./docker-compose.yml
+            echo "${{ secrets.DOCKER_COMPOSE }}" > ./docker-compose.yml
+            docker stop ${{ secrets.DOCKER_REPO }}
+            docker rm ${{ secrets.DOCKER_REPO }} 
+            sudo docker pull ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPO }} 
+            docker-compose up -d
+            docker rmi -f $(docker images -f "dangling=true" -q)
