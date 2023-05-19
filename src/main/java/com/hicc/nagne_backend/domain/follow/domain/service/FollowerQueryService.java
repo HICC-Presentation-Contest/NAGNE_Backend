@@ -9,11 +9,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class SenderQueryService {
+public class FollowerQueryService {
 
     private final FollowRepository followRepository;
 
-    public List<Follow> findById(Long receiverId) {
+    public List<Follow> findFollowerListById(Long receiverId) {
         List<Follow> senderList = followRepository.findByReceiverId(receiverId);
         return senderList;
 
