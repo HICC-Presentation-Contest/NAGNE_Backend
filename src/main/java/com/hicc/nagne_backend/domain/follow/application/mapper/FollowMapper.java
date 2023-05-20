@@ -10,10 +10,18 @@ import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FollowMapper {
-    public static List<FollowResponse.FollowInfoResponse> mapToFollowList(List<Follow> followList) {
+    public static List<FollowResponse.FollowInfoResponse> mapToFollowerList(List<Follow> followList) {
         return followList.stream()
                 .map(follow -> FollowResponse.FollowInfoResponse.builder()
                         .userId(follow.getSender().getId())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    public static List<FollowResponse.FollowInfoResponse> mapToFollowingList(List<Follow> followList) {
+        return followList.stream()
+                .map(follow -> FollowResponse.FollowInfoResponse.builder()
+                        .userId(follow.getReceiver().getId())
                         .build())
                 .collect(Collectors.toList());
     }
