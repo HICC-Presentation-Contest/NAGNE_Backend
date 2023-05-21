@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserGetService userGetService;
-    @GetMapping("/user/{tripId}")
-    public UserResponse.UserInfoResponse getUser(@PathVariable Long tripId){
-        return userGetService.getUser(tripId);
+    @GetMapping("/user/{userId}")
+    public UserResponse.UserInfoResponse getUser(@PathVariable Long userId){
+        return userGetService.getUser(userId);
     }
 
 }
