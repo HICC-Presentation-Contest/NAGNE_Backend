@@ -1,13 +1,11 @@
 package com.hicc.nagne_backend.domain.trip.domain.service;
 
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
 import com.hicc.nagne_backend.domain.trip.domain.entity.Trip;
 import com.hicc.nagne_backend.domain.trip.domain.repository.TripRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,5 +17,15 @@ public class TripQueryService {
 		Trip trip = tripRepository.findById(tripId)
 			.orElseThrow(() -> new IllegalArgumentException("해당 여정이 존재하지 않습니다."));
 		return trip;
+	}
+
+	public List<Trip> findByUserId(Long userId){
+		List<Trip> tripList = tripRepository.findByUserId(userId);
+		return tripList;
+	}
+
+	public Long countByUserId(Long userId){
+		Long count = tripRepository.countByUserId(userId);
+		return count;
 	}
 }
