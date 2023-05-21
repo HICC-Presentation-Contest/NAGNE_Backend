@@ -1,6 +1,6 @@
 package com.hicc.nagne_backend.domain.follow.application.mapper;
 
-import com.hicc.nagne_backend.domain.follow.application.dto.FollowResponse;
+import com.hicc.nagne_backend.domain.follow.application.dto.response.FollowResponse;
 import com.hicc.nagne_backend.domain.follow.domain.entity.Follow;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

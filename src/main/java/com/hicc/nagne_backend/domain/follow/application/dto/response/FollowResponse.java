@@ -1,4 +1,4 @@
-package com.hicc.nagne_backend.domain.follow.application.dto;
+package com.hicc.nagne_backend.domain.follow.application.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
