@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TripCreateService {
 
-    private final TripSaveService tripSavService;
+    private final TripSaveService tripSaveService;
     private final UserQueryService userQueryService;
 
     public void createTrip(TripRequest.TripCreateRequest tripCreateRequest){
         User user = userQueryService.findById(tripCreateRequest.getUserId());
-        tripSavService.save(tripCreateRequest.getAddress(),tripCreateRequest.getTitle(), user);
+        tripSaveService.save(tripCreateRequest.getAddress(),tripCreateRequest.getTitle(), user);
     }
 }

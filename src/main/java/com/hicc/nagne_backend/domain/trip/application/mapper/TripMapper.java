@@ -5,6 +5,9 @@ import com.hicc.nagne_backend.domain.trip.domain.entity.Trip;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TripMapper {
 
@@ -15,6 +18,15 @@ public class TripMapper {
 				.address(trip.getAddress())
 				.title(trip.getTitle())
 				.build();
+	}
+
+	public static List<TripResponse.UserPageTripInfoResponse> mapToTripInfoResponseList(List<Trip> tripList) {
+		return tripList.stream()
+				.map(trip -> TripResponse.UserPageTripInfoResponse.builder()
+						.address(trip.getAddress())
+						.title(trip.getTitle())
+						.build())
+				.collect(Collectors.toList());
 	}
 
 }

@@ -6,7 +6,6 @@ import lombok.Getter;
 public class TripResponse {
 
 	public static class SimpleTripInfoResponse {
-
 	}
 
 	@Getter
@@ -21,6 +20,18 @@ public class TripResponse {
 		public TripInfoResponse(long userId, String username, String address, String title) {
 			this.userId = userId;
 			this.username = username;
+			this.address = address;
+			this.title = title;
+		}
+	}
+
+	@Getter
+	public static class UserPageTripInfoResponse {
+		private String address;
+		private String title;
+		//Location 정보 추가하면 수정
+		@Builder
+		public UserPageTripInfoResponse(String address, String title) {
 			this.address = address;
 			this.title = title;
 		}
