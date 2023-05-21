@@ -11,11 +11,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class FollwingGetService {
+public class FollowingGetService {
 
     private final FollowingQueryService followingQueryService;
 
-    public List<FollowResponse.FollowInfoResponse> getReceiver(Long userId) {
+    public List<FollowResponse.FollowInfoResponse> getFollowingList(Long userId) {
         List<Follow> receiverIdList = followingQueryService.findFollowingListById(userId);
         return FollowMapper.mapToFollowingList(receiverIdList);
     }

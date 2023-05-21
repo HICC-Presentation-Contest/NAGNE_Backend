@@ -15,7 +15,7 @@ public class FollowerGetService {
 
     private final FollowerQueryService followerQueryService;
 
-    public List<FollowResponse.FollowInfoResponse> getSender(Long userId) {
+    public List<FollowResponse.FollowInfoResponse> getFollowerList(Long userId) {
         List<Follow> receiverIdList = followerQueryService.findFollowerListById(userId);
         return FollowMapper.mapToFollowerList(receiverIdList);
 
