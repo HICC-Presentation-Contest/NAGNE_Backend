@@ -18,4 +18,8 @@ public class FollowerQueryService {
         return senderList;
 
     }
+    public Long countByReceiverId(Long receiverId) {
+        Long count = followRepository.countByReceiverId(receiverId);
+        return count;
+    }
 }
