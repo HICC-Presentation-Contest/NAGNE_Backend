@@ -20,11 +20,12 @@ public class TripMapper {
 				.build();
 	}
 
-	public static List<TripResponse.UserPageTripInfoResponse> mapToTripInfoResponseList(List<Trip> tripList) {
+	public static List<TripResponse.TripSimpleResponse> mapToTripInfoResponseList(List<Trip> tripList) {
 		return tripList.stream()
-				.map(trip -> TripResponse.UserPageTripInfoResponse.builder()
+				.map(trip -> TripResponse.TripSimpleResponse.builder()
 						.address(trip.getAddress())
 						.title(trip.getTitle())
+						.tripId(trip.getId())
 						.build())
 				.collect(Collectors.toList());
 	}

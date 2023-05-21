@@ -8,4 +8,7 @@ import java.util.List;
 public interface FollowRepository extends JpaRepository<Follow, Long> {
     List<Follow> findByReceiverId(Long receiverId);
     List<Follow> findBySenderId(Long senderId);
+
+    Long countBySenderId(Long senderId);
+    Long countByReceiverId(Long receiverId);
 }

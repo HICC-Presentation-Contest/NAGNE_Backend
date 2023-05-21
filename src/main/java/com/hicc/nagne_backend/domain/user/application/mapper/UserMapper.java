@@ -11,9 +11,9 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapper {
 
-    public static UserResponse.UserInfoResponse mapToUserInfoResponse(User user, int followerCount, int followingCount,
-                                                                      List<TripResponse.UserPageTripInfoResponse> createTripList,
-                                                                      int createTripCount) {
+    public static UserResponse.UserInfoResponse mapToUserInfoResponse(User user, Long followerCount, Long followingCount,
+                                                                      List<TripResponse.TripSimpleResponse> createTripList,
+                                                                      Long createTripCount) {
         return UserResponse.UserInfoResponse.builder()
                 .name(user.getName())
                 .description(user.getDescription())

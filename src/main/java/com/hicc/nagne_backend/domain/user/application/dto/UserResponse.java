@@ -13,14 +13,14 @@ public class UserResponse {
 
         private String name;
         private String description;
-        private int followerCount;
-        private int followingCount;
-        private List<TripResponse.UserPageTripInfoResponse> createTripList;
-        private int createTripCount;
+        private Long followerCount;
+        private Long followingCount;
+        private List<TripResponse.TripSimpleResponse> createTripList;
+        private Long createTripCount;
 
         @Builder
-        public UserInfoResponse(String name, String description, int followerCount, int followingCount,
-                                List<TripResponse.UserPageTripInfoResponse> createTripList, int createTripCount) {
+        public UserInfoResponse(String name, String description, Long followerCount, Long followingCount,
+                                List<TripResponse.TripSimpleResponse> createTripList, Long createTripCount) {
             this.name = name;
             this.description = description;
             this.followerCount = followerCount;

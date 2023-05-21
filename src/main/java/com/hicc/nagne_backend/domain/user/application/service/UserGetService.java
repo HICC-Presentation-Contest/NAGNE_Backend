@@ -1,13 +1,13 @@
 package com.hicc.nagne_backend.domain.user.application.service;
 
-import com.hicc.nagne_backend.domain.follow.domain.service.FollowerQueryService;
-import com.hicc.nagne_backend.domain.follow.domain.service.FollowingQueryService;
+import com.hicc.nagne_backend.domain.follow.domain.repository.FollowRepository;
 import com.hicc.nagne_backend.domain.trip.application.dto.response.TripResponse;
 import com.hicc.nagne_backend.domain.trip.application.service.TripGetService;
-import com.hicc.nagne_backend.domain.trip.domain.service.TripQueryService;
+import com.hicc.nagne_backend.domain.trip.domain.repository.TripRepository;
 import com.hicc.nagne_backend.domain.user.application.dto.UserResponse;
 import com.hicc.nagne_backend.domain.user.application.mapper.UserMapper;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
+import com.hicc.nagne_backend.domain.user.domain.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,25 +17,27 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserGetService {
 
-    private final TripQueryService tripQueryService;
     private final TripGetService tripGetService;
+    private final UserQueryService userQueryService;
 
-    private final FollowerQueryService followerQueryService;
-    private final FollowingQueryService followingQueryService;
-    public UserResponse.UserInfoResponse getUser(Long tripId) {
+    private final FollowRepository followRepository;
+    private final TripRepository tripRepository;
+    public UserResponse.UserInfoResponse getUser(Long userId) {
 
-        User user = tripQueryService.findById(tripId).getUser();
-        Long userId = user.getId();
+        //userId로 User 가져오기
+        User user = userQueryService.findById(userId);
 
-        int followerCount = followerQueryService.findFollowerListById(userId).size();
-        int followingSize = followingQueryService.findFollowingListById(userId).size();
+        Long followerCount = followRepository.countByReceiverId(userId);
+        Long followingCount = followRepository.countBySenderId(userId);
 
-        List<TripResponse.UserPageTripInfoResponse> createTripList = tripGetService.getTripList(userId);
-        int createTripCount = createTripList.size();
+        List<TripResponse.TripSimpleResponse> createTripList = tripGetService.getTripList(userId);
+
+        Long createTripCount = tripRepository.countByUserId(userId);
+
         //저장 기능 추가하면 저장한 여정도 가져와야함
 
         UserResponse.UserInfoResponse userInfoResponse =
-                UserMapper.mapToUserInfoResponse(user, followerCount, followingSize, createTripList, createTripCount);
+                UserMapper.mapToUserInfoResponse(user, followerCount, followingCount, createTripList, createTripCount);
 
         return userInfoResponse;
     }

@@ -26,12 +26,14 @@ public class TripResponse {
 	}
 
 	@Getter
-	public static class UserPageTripInfoResponse {
+	public static class TripSimpleResponse {
+		private Long tripId;
 		private String address;
 		private String title;
 		//Location 정보 추가하면 수정
 		@Builder
-		public UserPageTripInfoResponse(String address, String title) {
+		public TripSimpleResponse(Long tripId, String address, String title) {
+			this.tripId = tripId;
 			this.address = address;
 			this.title = title;
 		}

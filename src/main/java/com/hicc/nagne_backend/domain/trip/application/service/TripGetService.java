@@ -21,9 +21,9 @@ public class TripGetService {
 		return tripInfoResponse;
 	}
 
-	public List<TripResponse.UserPageTripInfoResponse> getTripList(Long userId){
+	public List<TripResponse.TripSimpleResponse> getTripList(Long userId){
 		List<Trip> tripList = tripQueryService.findByUserId(userId);
-		List<TripResponse.UserPageTripInfoResponse> tripInfoResponseList = TripMapper.mapToTripInfoResponseList(tripList);
+		List<TripResponse.TripSimpleResponse> tripInfoResponseList = TripMapper.mapToTripInfoResponseList(tripList);
 		return tripInfoResponseList;
 	}
 }
