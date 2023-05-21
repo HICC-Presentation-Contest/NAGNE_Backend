@@ -15,7 +15,7 @@ public class FollowCreateService {
     private final FollowSaveService followSaveService;
     
     public void createFollow(FollowRequest.FollowCreateRequest followRequest) {
-        User sender = userQueryService.findById(followRequest.getUserId());
+        User sender = userQueryService.findById(followRequest.getSenderId());
         User receiver = userQueryService.findById(followRequest.getReceiverId());
         followSaveService.save(sender, receiver);
     }

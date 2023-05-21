@@ -7,12 +7,12 @@ public class FollowRequest {
 
     @Getter
     public static class FollowCreateRequest {
-        private long userId;
+        private long senderId;
         private long receiverId;
 
         @Builder
-        public FollowCreateRequest(long userId, long receiverId) {
-            this.userId = userId;
+        public FollowCreateRequest(long senderId, long receiverId) {
+            this.senderId = senderId;
             this.receiverId = receiverId;
         }
     }
