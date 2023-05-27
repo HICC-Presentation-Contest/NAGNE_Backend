@@ -5,7 +5,7 @@ import com.hicc.nagne_backend.domain.follow.domain.service.FollowingQueryService
 import com.hicc.nagne_backend.domain.trip.application.dto.response.TripResponse;
 import com.hicc.nagne_backend.domain.trip.application.service.TripGetService;
 import com.hicc.nagne_backend.domain.trip.domain.service.TripQueryService;
-import com.hicc.nagne_backend.domain.user.application.dto.UserResponse;
+import com.hicc.nagne_backend.domain.user.application.dto.resopnse.UserResponse;
 import com.hicc.nagne_backend.domain.user.application.mapper.UserMapper;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import com.hicc.nagne_backend.domain.user.domain.service.UserQueryService;

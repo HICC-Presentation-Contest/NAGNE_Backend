@@ -1,7 +1,7 @@
 package com.hicc.nagne_backend.domain.user.application.mapper;
 
 import com.hicc.nagne_backend.domain.trip.application.dto.response.TripResponse;
-import com.hicc.nagne_backend.domain.user.application.dto.UserResponse;
+import com.hicc.nagne_backend.domain.user.application.dto.resopnse.UserResponse;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -23,4 +23,5 @@ public class UserMapper {
                 .createTripCount(createTripCount)
                 .build();
     }
+
 }

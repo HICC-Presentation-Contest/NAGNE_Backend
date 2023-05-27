@@ -1,4 +1,4 @@
-package com.hicc.nagne_backend.domain.user.application.dto;
+package com.hicc.nagne_backend.domain.user.application.dto.resopnse;
 
 import com.hicc.nagne_backend.domain.trip.application.dto.response.TripResponse;
 import lombok.Builder;
