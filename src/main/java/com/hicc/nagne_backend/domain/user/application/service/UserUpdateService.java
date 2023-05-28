@@ -21,8 +21,9 @@ public class UserUpdateService {
         String name = userUpdateRequest.getName();
         String email = userUpdateRequest.getEmail();
         String description = userUpdateRequest.getDescription();
+        String profileUrl = userUpdateRequest.getProfileUrl();
 
-        user.updateUser(name, description, email);
+        user.updateUserInfo(name, description, email, profileUrl);
 
     }
 }
