@@ -11,13 +11,15 @@ public class UserRequest {
         private String name;
         private String description;
         private String email;
+        private String profileUrl;
 
         @Builder
-        public UserUpdateRequest(Long userId, String name, String description, String email) {
+        public UserUpdateRequest(Long userId, String name, String description, String email, String profileUrl) {
             this.userId = userId;
             this.name = name;
             this.description = description;
             this.email = email;
+            this.profileUrl = profileUrl;
         }
     }
 }
