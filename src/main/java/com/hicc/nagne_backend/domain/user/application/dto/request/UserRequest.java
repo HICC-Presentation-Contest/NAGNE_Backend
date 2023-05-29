@@ -22,4 +22,16 @@ public class UserRequest {
             this.profileUrl = profileUrl;
         }
     }
+
+    @Getter
+    public static class UserSignUpRequest{
+        private String name;
+        private String email;
+
+        @Builder
+        public UserSignUpRequest(String name, String email) {
+            this.name = name;
+            this.email = email;
+        }
+    }
 }
