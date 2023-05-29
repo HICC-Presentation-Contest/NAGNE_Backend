@@ -1,6 +1,8 @@
 spring:
   profiles:
-    include: ${profile}
+    include:
+      - ${profile}
+      - auth
 
   redis:
     host: redis
