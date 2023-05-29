@@ -35,6 +35,13 @@ jobs:
           echo "${{ secrets.APPLICATION_PROD }}" > ./application-prod.yml
         shell: bash
 
+      - name: Make application-auth.yml
+        run: |
+          cd ./src/main/resources
+          touch ./application-prod.yml
+          echo "${{ secrets.APPLICATION_AUTH }}" > ./application-auth.yml
+        shell: bash
+
       - name: Build With Gradle
         run: ./gradlew build
 
