@@ -1,4 +1,4 @@
-package com.hicc.nagne_backend.domain.trip.domain.handler;
+package com.hicc.nagne_backend.domain.user.application.handler;
 
 import com.hicc.nagne_backend.common.annotation.UseCase;
 import com.hicc.nagne_backend.domain.user.application.dto.request.UserRequest;
