@@ -19,10 +19,14 @@ public class LocationImage extends BaseTimeEntity {
 
     private String imageUrl;
 
-    //각 위치정보 연관관계 나중에 추가
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_info_id")
+    private LocationImage locationImage;
 
     @Builder
-    public LocationImage(String imageUrl) {
+
+    public LocationImage(String imageUrl, LocationImage locationImage) {
         this.imageUrl = imageUrl;
+        this.locationImage = locationImage;
     }
 }
