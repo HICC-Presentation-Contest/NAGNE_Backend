@@ -1,22 +1,23 @@
 package com.hicc.nagne_backend.domain.user.application.service;
 
+import com.hicc.nagne_backend.common.annotation.UseCase;
+import com.hicc.nagne_backend.common.util.UserUtils;
 import com.hicc.nagne_backend.domain.user.application.dto.request.UserRequest;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import com.hicc.nagne_backend.domain.user.domain.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@UseCase
 @RequiredArgsConstructor
 @Transactional
-public class UserUpdateService {
+public class UserUpdateUseCase {
 
+    private final UserUtils userUtils;
     private final UserQueryService userQueryService;
 
-    public void updateUser(UserRequest.UserUpdateRequest userUpdateRequest) {
-        Long userId = userUpdateRequest.getUserId();
-        User user = userQueryService.findById(userId);
+    public void updateUser(final UserRequest.UserUpdateRequest userUpdateRequest) {
+        final User user = userUtils.getUser();
 
         String name = userUpdateRequest.getName();
         String email = userUpdateRequest.getEmail();

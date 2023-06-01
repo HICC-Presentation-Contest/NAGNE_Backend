@@ -1,6 +1,7 @@
 package com.hicc.nagne_backend.domain.user.application.mapper;
 
 import com.hicc.nagne_backend.domain.trip.application.dto.response.TripResponse;
+import com.hicc.nagne_backend.domain.user.application.dto.request.UserRequest;
 import com.hicc.nagne_backend.domain.user.application.dto.resopnse.UserResponse;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import lombok.AccessLevel;
@@ -21,6 +22,13 @@ public class UserMapper {
                 .followingCount(followingCount)
                 .createTripList(createTripList)
                 .createTripCount(createTripCount)
+                .build();
+    }
+
+    public static User mapToUser(UserRequest.UserSignUpRequest request){
+        return User.builder()
+                .name(request.getName())
+                .email(request.getEmail())
                 .build();
     }
 
