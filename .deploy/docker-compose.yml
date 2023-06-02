@@ -5,8 +5,8 @@ services:
     ports:
       - 6379:6379
   spring:
-    container_name: samsion_backend
-    image: samsion/samsion_backend
+    container_name: nagne_backend
+    image: tlarbals824/nagne_backend
     expose:
       - 8080
     ports:
