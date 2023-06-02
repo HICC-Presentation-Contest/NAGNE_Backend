@@ -1,0 +1,13 @@
+version: '3'
+services:
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+  spring:
+    container_name: samsion_backend
+    image: samsion/samsion_backend
+    expose:
+      - 8080
+    ports:
+      - 80:8080
