@@ -17,7 +17,6 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-
       - name: Gradle Caching
         uses: actions/cache@v3
         with:
@@ -38,14 +37,14 @@ jobs:
       - name: Make application-auth.yml
         run: |
           cd ./src/main/resources
-          touch ./application-prod.yml
+          touch ./application-auth.yml
           echo "${{ secrets.APPLICATION_AUTH }}" > ./application-auth.yml
         shell: bash
 
       - name: Make application-aws.yml
         run: |
           cd ./src/main/resources
-          touch ./application-prod.yml
+          touch ./application-aws.yml
           echo "${{ secrets.APPLICATION_AWS }}" > ./application-aws.yml
         shell: bash
 
