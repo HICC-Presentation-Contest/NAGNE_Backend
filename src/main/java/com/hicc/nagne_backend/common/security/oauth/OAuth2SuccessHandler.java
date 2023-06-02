@@ -3,6 +3,7 @@ package com.hicc.nagne_backend.common.security.oauth;
 import com.hicc.nagne_backend.common.security.jwt.JwtProvider;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -25,37 +26,38 @@ import static com.hicc.nagne_backend.common.consts.ApplicationConst.REFRESH_TOKE
 @RequiredArgsConstructor
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
-	private final JwtProvider jwtProvider;
+    @Value("${frontend.url}")
+    private String FRONTEND_URL;
+    private final JwtProvider jwtProvider;
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws IOException {
+        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+        TokenInfo tokenInfo = generateToken(oAuth2User.getAttribute("email"));
+        response.sendRedirect(UriComponentsBuilder.fromUriString(FRONTEND_URL)
+                .queryParam(ACCESS_TOKEN_HEADER, tokenInfo.getAccessToken())
+                .queryParam(REFRESH_TOKEN_HEADER, tokenInfo.getRefreshToken()).build()
+                .encode(StandardCharsets.UTF_8)
+                .toUriString());
+    }
 
-	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-		Authentication authentication) throws IOException {
-		OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
-		TokenInfo tokenInfo = generateToken(oAuth2User.getAttribute("email"));
-		response.sendRedirect(UriComponentsBuilder.fromUriString("")
-			.queryParam(ACCESS_TOKEN_HEADER, tokenInfo.getAccessToken())
-			.queryParam(REFRESH_TOKEN_HEADER, tokenInfo.getRefreshToken()).build()
-			.encode(StandardCharsets.UTF_8)
-			.toUriString());
-	}
+    private TokenInfo generateToken(String email) {
+        String accessToken = jwtProvider.generateAccessToken(email);
+        String refreshToken = jwtProvider.generateRefreshToken(email);
 
-	private TokenInfo generateToken(String email) {
-		String accessToken = jwtProvider.generateAccessToken(email);
-		String refreshToken = jwtProvider.generateRefreshToken(email);
-
-		return new TokenInfo(accessToken, refreshToken);
-	}
+        return new TokenInfo(accessToken, refreshToken);
+    }
 
 
-	@Getter
-	private static class TokenInfo {
-		private final String accessToken;
-		private final String refreshToken;
+    @Getter
+    private static class TokenInfo {
+        private final String accessToken;
+        private final String refreshToken;
 
-		public TokenInfo(String accessToken, String refreshToken) {
-			this.accessToken = accessToken;
-			this.refreshToken = refreshToken;
-		}
+        public TokenInfo(String accessToken, String refreshToken) {
+            this.accessToken = accessToken;
+            this.refreshToken = refreshToken;
+        }
 
-	}
+    }
 }
