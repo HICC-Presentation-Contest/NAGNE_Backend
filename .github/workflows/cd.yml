@@ -63,6 +63,8 @@ jobs:
       - name: Deploy to Prob
         uses: appleboy/ssh-action@master
         id: deploy-prob
+        env:
+          DOCKER_COMPOSE : ".deploy/docker-compose.yml"
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
@@ -70,7 +72,7 @@ jobs:
           envs: GITHUB_SHA
           script: |
             touch ./docker-compose.yml
-            echo  ${{ secrets.DOCKER_COMPOSE }} > ./docker-compose.yml
+            echo  $DOCKER_COMPOSE > ./docker-compose.yml
             docker stop ${{ secrets.DOCKER_REPO }}
             docker rm ${{ secrets.DOCKER_REPO }} 
             docker pull ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPO }} 
