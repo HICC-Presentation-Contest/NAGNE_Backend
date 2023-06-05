@@ -1,6 +1,6 @@
 package com.hicc.nagne_backend.domain.locationimage.presentation;
 
-import com.hicc.nagne_backend.domain.locationimage.application.service.ImageUploadService;
+import com.hicc.nagne_backend.domain.locationimage.application.service.ImageUploadUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,10 +13,10 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class LocationImageController {
 
-    private final ImageUploadService imageUploadService;
+    private final ImageUploadUseCase imageUploadUseCase;
 
     @PostMapping("/locationImage")
     public void uploadLocationImage(@ModelAttribute MultipartFile multipartFile) throws IOException {
-        imageUploadService.uploadImage(multipartFile);
+        imageUploadUseCase.uploadImage(multipartFile);
     }
 }
