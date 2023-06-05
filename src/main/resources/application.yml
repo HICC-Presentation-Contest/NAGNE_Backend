@@ -3,6 +3,7 @@ spring:
     include:
       - ${profile}
       - auth
+      - aws
 
   redis:
     host: redis

@@ -1,6 +1,6 @@
 package com.hicc.nagne_backend.domain.locationimage.application.service;
 
-import com.hicc.nagne_backend.common.infra.s3.S3UploadService;
+import com.hicc.nagne_backend.domain.s3.infrastructure.S3UploadService;
 import com.hicc.nagne_backend.domain.locationimage.domain.service.ImageSaveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

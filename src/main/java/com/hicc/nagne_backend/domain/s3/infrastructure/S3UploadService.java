@@ -1,4 +1,4 @@
-package com.hicc.nagne_backend.common.infra.s3;
+package com.hicc.nagne_backend.domain.s3.infrastructure;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;

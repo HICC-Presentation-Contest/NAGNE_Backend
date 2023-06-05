@@ -17,7 +17,6 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-
       - name: Gradle Caching
         uses: actions/cache@v3
         with:
@@ -38,18 +37,26 @@ jobs:
       - name: Make application-auth.yml
         run: |
           cd ./src/main/resources
-          touch ./application-prod.yml
+          touch ./application-auth.yml
           echo "${{ secrets.APPLICATION_AUTH }}" > ./application-auth.yml
+        shell: bash
+
+      - name: Make application-aws.yml
+        run: |
+          cd ./src/main/resources
+          touch ./application-aws.yml
+          echo "${{ secrets.APPLICATION_AWS }}" > ./application-aws.yml
         shell: bash
 
       - name: Build With Gradle
         run: ./gradlew build
 
-
       - name: Docker build & Push
+        env:
+          DOCKER_PATH : .deploy/Dockerfile
         run: |
           docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile -t ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPO }} .
+          docker build -f $DOCKER_PATH -t ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPO }} .
           docker push ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPO }}
 
       - name: Deploy to Prob
@@ -61,10 +68,9 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           envs: GITHUB_SHA
           script: |
+            docker pull ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPO }}
             touch ./docker-compose.yml
-            echo "${{ secrets.DOCKER_COMPOSE }}" > ./docker-compose.yml
+            echo  "${{ secrets.DOCKER_COMPOSE }}" > ./docker-compose.yml
             docker stop ${{ secrets.DOCKER_REPO }}
-            docker rm ${{ secrets.DOCKER_REPO }} 
-            sudo docker pull ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPO }} 
+            docker rm ${{ secrets.DOCKER_REPO }}  
             docker-compose up -d
-            docker rmi -f $(docker images -f "dangling=true" -q)
