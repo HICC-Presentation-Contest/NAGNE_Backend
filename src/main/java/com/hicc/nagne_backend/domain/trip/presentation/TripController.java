@@ -2,8 +2,8 @@ package com.hicc.nagne_backend.domain.trip.presentation;
 
 import com.hicc.nagne_backend.domain.trip.application.dto.request.TripRequest;
 import com.hicc.nagne_backend.domain.trip.application.dto.response.TripResponse;
-import com.hicc.nagne_backend.domain.trip.application.service.TripCreateService;
-import com.hicc.nagne_backend.domain.trip.application.service.TripGetService;
+import com.hicc.nagne_backend.domain.trip.application.service.TripCreateUseCase;
+import com.hicc.nagne_backend.domain.trip.application.service.TripGetUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class TripController {
 
-	private final TripGetService tripGetService;
-	private final TripCreateService tripCreateService;
+	private final TripGetUseCase tripGetUseCase;
+	private final TripCreateUseCase tripCreateUseCase;
 
 	/**
 	 * Page<SimpleTripInfoResponse> 반환
@@ -27,12 +27,12 @@ public class TripController {
 	 */
 	@GetMapping("/trip/{tripId}")
 	public TripResponse.TripInfoResponse getTrip(@PathVariable Long tripId){
-		return tripGetService.getTrip(tripId);
+		return tripGetUseCase.getTrip(tripId);
 	}
 
 	@PostMapping("/trip")
 	public void createTrip(@RequestBody TripRequest.TripCreateRequest tripCreateRequest){
-		tripCreateService.createTrip(tripCreateRequest);
+		tripCreateUseCase.createTrip(tripCreateRequest);
 	}
 
 
