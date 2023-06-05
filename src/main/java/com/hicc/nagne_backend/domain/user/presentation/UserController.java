@@ -9,17 +9,18 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserController {
 
     private final UserGetUseCase userGetUseCase;
     private final UserUpdateUseCase userUpdateUseCase;
 
-    @GetMapping("/user/{userId}")
-    public UserResponse.UserInfoResponse getUser(@PathVariable Long userId){
-        return userGetUseCase.getUser(userId);
+    @GetMapping
+    public UserResponse.UserInfoResponse getUser(){
+        return userGetUseCase.getUser();
     }
 
-    @PostMapping("/user")   // 4개의 필드 다 바꿀 수 있는건가?
+    @PostMapping  // 4개의 필드 모두 변경 가능
     public void updateUser(@RequestBody UserRequest.UserUpdateRequest userUpdateRequest) {
         userUpdateUseCase.updateUser(userUpdateRequest);
     }

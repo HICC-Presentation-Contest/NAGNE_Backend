@@ -1,10 +1,11 @@
 package com.hicc.nagne_backend.domain.user.application.service;
 
 import com.hicc.nagne_backend.common.annotation.UseCase;
+import com.hicc.nagne_backend.common.util.UserUtils;
 import com.hicc.nagne_backend.domain.follow.domain.service.FollowerQueryService;
 import com.hicc.nagne_backend.domain.follow.domain.service.FollowingQueryService;
 import com.hicc.nagne_backend.domain.trip.application.dto.response.TripResponse;
-import com.hicc.nagne_backend.domain.trip.application.service.TripGetService;
+import com.hicc.nagne_backend.domain.trip.application.service.TripGetUseCase;
 import com.hicc.nagne_backend.domain.trip.domain.service.TripQueryService;
 import com.hicc.nagne_backend.domain.user.application.dto.resopnse.UserResponse;
 import com.hicc.nagne_backend.domain.user.application.mapper.UserMapper;
@@ -18,22 +19,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserGetUseCase {
 
-    private final TripGetService tripGetService;
+    private final UserUtils userUtils;
+    private final TripGetUseCase tripGetUseCase;
     private final UserQueryService userQueryService;
 
     private final FollowerQueryService followerQueryService;
     private final FollowingQueryService followingQueryService;
     private final TripQueryService tripQueryService;
 
-    public UserResponse.UserInfoResponse getUser(Long userId) {
+    public UserResponse.UserInfoResponse getUser() {
 
-        //userId로 User 가져오기
-        User user = userQueryService.findById(userId);
+        User user = userUtils.getUser();
+        Long userId = user.getId();
 
         Long followerCount = followerQueryService.countByReceiverId(userId);
         Long followingCount = followingQueryService.countBySenderId(userId);
 
-        List<TripResponse.TripSimpleResponse> createTripList = tripGetService.getTripList(userId);
+        List<TripResponse.TripSimpleResponse> createTripList = tripGetUseCase.getTripList(userId);
 
         Long createTripCount = tripQueryService.countByUserId(userId);
 
