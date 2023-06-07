@@ -1,6 +1,7 @@
 package com.hicc.nagne_backend.common.security.oauth;
 
 import com.hicc.nagne_backend.domain.user.application.dto.request.UserRequest;
+import com.hicc.nagne_backend.domain.user.domain.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -23,6 +24,7 @@ import java.util.Collections;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
 	private final ApplicationEventPublisher eventPublisher;
+	private final UserQueryService userQueryService;
 
 	/**
 	 * TODO : 코드 리팩터링, 예외처리 추가하기, kakao, naver 로그인 추가하기 , Authorities 설정 변경 필요 (현재는 ROLE_USER로 고정, enum으로 관리 필요)
@@ -39,7 +41,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
 		OAuth2Attributes attributes = OAuth2Attributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-		saveOAuth2User(attributes);
+		try {
+			userQueryService.findByEmail(attributes.getEmail());
+		} catch (Exception e) {
+			saveOAuth2User(attributes);
+		}
 
 		return new DefaultOAuth2User(Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")),
 			attributes.getAttributes(),
