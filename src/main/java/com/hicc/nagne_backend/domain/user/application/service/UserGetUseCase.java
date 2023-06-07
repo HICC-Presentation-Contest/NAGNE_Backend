@@ -12,11 +12,13 @@ import com.hicc.nagne_backend.domain.user.application.mapper.UserMapper;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import com.hicc.nagne_backend.domain.user.domain.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @UseCase
 @RequiredArgsConstructor
+@Transactional
 public class UserGetUseCase {
 
     private final UserUtils userUtils;

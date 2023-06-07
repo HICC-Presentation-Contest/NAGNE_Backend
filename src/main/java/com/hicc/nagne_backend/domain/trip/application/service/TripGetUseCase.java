@@ -6,11 +6,13 @@ import com.hicc.nagne_backend.domain.trip.application.mapper.TripMapper;
 import com.hicc.nagne_backend.domain.trip.domain.entity.Trip;
 import com.hicc.nagne_backend.domain.trip.domain.service.TripQueryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @UseCase
 @RequiredArgsConstructor
+@Transactional
 public class TripGetUseCase {
 
 	private final TripQueryService tripQueryService;

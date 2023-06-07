@@ -6,9 +6,11 @@ import com.hicc.nagne_backend.domain.follow.domain.service.FollowSaveService;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import com.hicc.nagne_backend.domain.user.domain.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
+@Transactional
 public class FollowCreateUseCase {
 
     private final UserQueryService userQueryService;

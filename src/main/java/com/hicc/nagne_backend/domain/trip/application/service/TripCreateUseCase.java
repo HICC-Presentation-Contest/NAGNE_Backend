@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
+@Transactional
 public class TripCreateUseCase {
 
     private final TripSaveService tripSaveService;
