@@ -22,10 +22,9 @@ public class UserSignUpHandler {
     public void signUp(UserRequest.UserSignUpRequest request){
         final User user = UserMapper.mapToUser(request);
 
-        try{
-            userQueryService.findByEmail(user.getEmail());
-        } catch (Exception e){
+        if(!userQueryService.existsByEmail(user.getEmail())){
             userSaveService.save(user);
-        }
+        };
+
     }
 }
