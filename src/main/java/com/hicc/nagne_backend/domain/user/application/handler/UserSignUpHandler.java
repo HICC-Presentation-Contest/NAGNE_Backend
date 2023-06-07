@@ -24,7 +24,7 @@ public class UserSignUpHandler {
 
         if(!userQueryService.existsByEmail(user.getEmail())){
             userSaveService.save(user);
-        };
+        }
 
     }
 }
