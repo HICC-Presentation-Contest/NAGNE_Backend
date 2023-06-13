@@ -17,8 +17,8 @@ import com.hicc.nagne_backend.domain.trip.domain.service.TripSaveService;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @UseCase
@@ -35,25 +35,26 @@ public class TripCreateUseCase {
 
 
     @Transactional
-    public void createTrip(TripRequest.TripCreateRequest tripCreateRequest) throws IOException {
-
+    public void createTrip(TripRequest.TripCreateRequest tripCreateRequest) {
         User user = userUtils.getUser();
         Trip trip = TripMapper.mapToTrip(tripCreateRequest, user);
 
         tripCreateRequest.getTag().forEach(tagCreate ->
                 tagSaveService.save(TagMapper.mapToTag(trip, tagCreate)));
 
-        List<LocationInfo> locationInfoList = LocationInfoMapper.mapToLocationInfo(trip, tripCreateRequest.getLocationInfo());
 
-        String imageUrl = s3UploadService.upload(tripCreateRequest.getLocationImg());
+        List<LocationInfo> locationInfoList = LocationInfoMapper.mapToLocationInfo(trip, tripCreateRequest.getLocationInfo());
+        MultipartFile locationImg = tripCreateRequest.getLocationInfo().get(0).getLocationImage();
+
+        String imgUrl = s3UploadService.upload(locationImg);
 
         locationInfoList.forEach(locationInfo -> {
             locationInfoSaveService.save(locationInfo);
             imageSaveService.saveImage(LocationImage.builder()
-                    .imageUrl(imageUrl)
-                    .locationInfo(locationInfo).build());
+                    .locationInfo(locationInfo)
+                    .imageUrl(imgUrl)
+                    .build());
         });
-
 
         tripSaveService.save(trip);
     }

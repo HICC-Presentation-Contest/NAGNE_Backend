@@ -5,7 +5,6 @@ import com.hicc.nagne_backend.domain.tag.application.dto.TagRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,18 +18,15 @@ public class TripRequest {
 
         private List<TagRequest.TagCreate> tag;
         private List<LocationInfoRequest.LocationInfoCreate> locationInfo;
-        private MultipartFile locationImg;
 
         @Builder
         public TripCreateRequest(String address, String title,
                                  List<TagRequest.TagCreate> tag,
-                                 List<LocationInfoRequest.LocationInfoCreate> locationInfo,
-                                 MultipartFile locationImg) {
+                                 List<LocationInfoRequest.LocationInfoCreate> locationInfo) {
             this.address = address;
             this.title = title;
             this.tag = tag;
             this.locationInfo = locationInfo;
-            this.locationImg = locationImg;
         }
     }
 }
