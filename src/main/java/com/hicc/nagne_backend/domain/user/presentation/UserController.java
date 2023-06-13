@@ -9,18 +9,17 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
 public class UserController {
 
     private final UserGetUseCase userGetUseCase;
     private final UserUpdateUseCase userUpdateUseCase;
 
-    @GetMapping
-    public UserResponse.UserInfoResponse getUser(){
+    @GetMapping(value = {"/user/{userId}", "/user"})
+    public UserResponse.UserInfoResponse getUser(@PathVariable(required = false) String userId){
         return userGetUseCase.getUser();
     }
 
-    @PostMapping  // 4개의 필드 모두 변경 가능
+    @PostMapping("/user")// 4개의 필드 모두 변경 가능
     public void updateUser(@RequestBody UserRequest.UserUpdateRequest userUpdateRequest) {
         userUpdateUseCase.updateUser(userUpdateRequest);
     }
