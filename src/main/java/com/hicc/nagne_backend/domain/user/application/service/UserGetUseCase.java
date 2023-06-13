@@ -10,7 +10,6 @@ import com.hicc.nagne_backend.domain.trip.domain.service.TripQueryService;
 import com.hicc.nagne_backend.domain.user.application.dto.resopnse.UserResponse;
 import com.hicc.nagne_backend.domain.user.application.mapper.UserMapper;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
-import com.hicc.nagne_backend.domain.user.domain.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +22,6 @@ public class UserGetUseCase {
 
     private final UserUtils userUtils;
     private final TripGetUseCase tripGetUseCase;
-    private final UserQueryService userQueryService;
 
     private final FollowerQueryService followerQueryService;
     private final FollowingQueryService followingQueryService;
