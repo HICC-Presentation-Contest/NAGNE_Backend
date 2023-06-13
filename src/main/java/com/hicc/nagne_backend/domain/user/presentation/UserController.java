@@ -14,9 +14,9 @@ public class UserController {
     private final UserGetUseCase userGetUseCase;
     private final UserUpdateUseCase userUpdateUseCase;
 
-    @GetMapping(value = {"/user/{userId}", "/user"})
-    public UserResponse.UserInfoResponse getUser(@PathVariable(required = false) String userId){
-        return userGetUseCase.getUser();
+    @GetMapping( "/user")
+    public UserResponse.UserInfoResponse getUser(@RequestParam(required = false) Long userId){
+        return userGetUseCase.getUser(userId);
     }
 
     @PostMapping("/user")// 4개의 필드 모두 변경 가능

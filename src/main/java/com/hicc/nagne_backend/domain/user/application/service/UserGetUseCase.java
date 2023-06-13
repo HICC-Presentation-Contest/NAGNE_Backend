@@ -10,6 +10,7 @@ import com.hicc.nagne_backend.domain.trip.domain.service.TripQueryService;
 import com.hicc.nagne_backend.domain.user.application.dto.resopnse.UserResponse;
 import com.hicc.nagne_backend.domain.user.application.mapper.UserMapper;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
+import com.hicc.nagne_backend.domain.user.domain.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,11 +28,21 @@ public class UserGetUseCase {
     private final FollowingQueryService followingQueryService;
     private final TripQueryService tripQueryService;
 
-    public UserResponse.UserInfoResponse getUser() {
+    private final UserQueryService userQueryService;
+
+    public UserResponse.UserInfoResponse getUser(Long userId) {
+
+        if(userId != null){
+            User user = userQueryService.findById(userId);
+            return getUserInfoResponse(userId, user);
+        }
 
         User user = userUtils.getUser();
-        Long userId = user.getId();
+        Long findUserId = user.getId();
+        return getUserInfoResponse(findUserId, user);
+    }
 
+    private UserResponse.UserInfoResponse getUserInfoResponse(Long userId, User user) {
         Long followerCount = followerQueryService.countByReceiverId(userId);
         Long followingCount = followingQueryService.countBySenderId(userId);
 
