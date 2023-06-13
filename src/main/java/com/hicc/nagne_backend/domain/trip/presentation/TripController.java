@@ -7,6 +7,8 @@ import com.hicc.nagne_backend.domain.trip.application.service.TripGetUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequiredArgsConstructor
 public class TripController {
@@ -31,7 +33,7 @@ public class TripController {
 	}
 
 	@PostMapping("/trip")
-	public void createTrip(@RequestBody TripRequest.TripCreateRequest tripCreateRequest){
+	public void createTrip(@RequestBody TripRequest.TripCreateRequest tripCreateRequest) throws IOException {
 		tripCreateUseCase.createTrip(tripCreateRequest);
 	}
 

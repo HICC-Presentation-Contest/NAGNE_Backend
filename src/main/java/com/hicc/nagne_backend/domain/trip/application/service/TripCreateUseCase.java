@@ -2,16 +2,24 @@ package com.hicc.nagne_backend.domain.trip.application.service;
 
 import com.hicc.nagne_backend.common.annotation.UseCase;
 import com.hicc.nagne_backend.common.util.UserUtils;
+import com.hicc.nagne_backend.domain.locationimage.domain.entity.LocationImage;
+import com.hicc.nagne_backend.domain.locationimage.domain.service.ImageSaveService;
+import com.hicc.nagne_backend.domain.locationinfo.application.mapper.LocationInfoMapper;
+import com.hicc.nagne_backend.domain.locationinfo.domain.entity.LocationInfo;
 import com.hicc.nagne_backend.domain.locationinfo.domain.service.LocationInfoSaveService;
+import com.hicc.nagne_backend.domain.s3.infrastructure.S3UploadService;
+import com.hicc.nagne_backend.domain.tag.application.mapper.TagMapper;
 import com.hicc.nagne_backend.domain.tag.domain.service.TagSaveService;
 import com.hicc.nagne_backend.domain.trip.application.dto.request.TripRequest;
 import com.hicc.nagne_backend.domain.trip.application.mapper.TripMapper;
 import com.hicc.nagne_backend.domain.trip.domain.entity.Trip;
 import com.hicc.nagne_backend.domain.trip.domain.service.TripSaveService;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
-import com.hicc.nagne_backend.domain.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
+import java.util.List;
 
 @UseCase
 @RequiredArgsConstructor
@@ -22,17 +30,30 @@ public class TripCreateUseCase {
     private final TagSaveService tagSaveService;
     private final LocationInfoSaveService locationInfoSaveService;
     private final UserUtils userUtils;
-    private final UserRepository userRepository;
+    private final S3UploadService s3UploadService;
+    private final ImageSaveService imageSaveService;
+
 
     @Transactional
-    public void createTrip(TripRequest.TripCreateRequest tripCreateRequest){
+    public void createTrip(TripRequest.TripCreateRequest tripCreateRequest) throws IOException {
 
         User user = userUtils.getUser();
-
         Trip trip = TripMapper.mapToTrip(tripCreateRequest, user);
 
-        tagSaveService.save(tripCreateRequest.getTag(), trip);
-        locationInfoSaveService.save(tripCreateRequest.getLocationInfo(), trip);
+        tripCreateRequest.getTag().forEach(tagCreate ->
+                tagSaveService.save(TagMapper.mapToTag(trip, tagCreate)));
+
+        List<LocationInfo> locationInfoList = LocationInfoMapper.mapToLocationInfo(trip, tripCreateRequest.getLocationInfo());
+
+        String imageUrl = s3UploadService.upload(tripCreateRequest.getLocationImg());
+
+        locationInfoList.forEach(locationInfo -> {
+            locationInfoSaveService.save(locationInfo);
+            imageSaveService.saveImage(LocationImage.builder()
+                    .imageUrl(imageUrl)
+                    .locationInfo(locationInfo).build());
+        });
+
 
         tripSaveService.save(trip);
     }
