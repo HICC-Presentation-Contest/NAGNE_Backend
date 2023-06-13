@@ -10,7 +10,10 @@ public enum Error {
 
 	// JWT
 	INVALID_TOKEN("잘못된 토큰 요청", 7000),
-	EXPIRED_TOKEN("토큰 만료", 7001);
+	EXPIRED_TOKEN("토큰 만료", 7001),
+
+	//S3
+	FILE_UPLOAD_ERROR("파일 업로드에 실패하였습니다.", 2000);
 
 	private final String message;
 	private final int errorCode;
