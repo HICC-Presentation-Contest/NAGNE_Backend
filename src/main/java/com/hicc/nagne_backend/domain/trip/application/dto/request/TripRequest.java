@@ -1,6 +1,6 @@
 package com.hicc.nagne_backend.domain.trip.application.dto.request;
 
-import com.hicc.nagne_backend.domain.locationinfo.application.dto.LocationInfoRequest;
+import com.hicc.nagne_backend.domain.locationinfo.application.dto.request.LocationInfoRequest;
 import com.hicc.nagne_backend.domain.tag.application.dto.TagRequest;
 import lombok.Builder;
 import lombok.Getter;

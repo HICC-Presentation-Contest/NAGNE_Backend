@@ -44,16 +44,19 @@ public class TripCreateUseCase {
 
 
         List<LocationInfo> locationInfoList = LocationInfoMapper.mapToLocationInfo(trip, tripCreateRequest.getLocationInfo());
-        MultipartFile locationImg = tripCreateRequest.getLocationInfo().get(0).getLocationImage();
 
-        String imgUrl = s3UploadService.upload(locationImg);
+        tripCreateRequest.getLocationInfo().forEach(locationInfoCreateRequest -> {
+            MultipartFile locationImage = locationInfoCreateRequest.getLocationImage();
+            String imgUrl = s3UploadService.upload(locationImage);
 
-        locationInfoList.forEach(locationInfo -> {
-            locationInfoSaveService.save(locationInfo);
-            imageSaveService.saveImage(LocationImage.builder()
-                    .locationInfo(locationInfo)
-                    .imageUrl(imgUrl)
-                    .build());
+            locationInfoList.forEach(locationInfo -> {
+                locationInfoSaveService.save(locationInfo);
+                imageSaveService.saveImage(LocationImage.builder()
+                        .locationInfo(locationInfo)
+                        .imageUrl(imgUrl)
+                        .build());
+            });
+
         });
 
         tripSaveService.save(trip);

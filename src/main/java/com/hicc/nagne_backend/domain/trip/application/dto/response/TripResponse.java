@@ -30,12 +30,14 @@ public class TripResponse {
 		private Long tripId;
 		private String address;
 		private String title;
-		//Location 정보 추가하면 수정
+		private Long tripCount;
+
 		@Builder
-		public TripSimpleResponse(Long tripId, String address, String title) {
+		public TripSimpleResponse(Long tripId, String address, String title, Long tripCount) {
 			this.tripId = tripId;
 			this.address = address;
 			this.title = title;
+			this.tripCount = tripCount;
 		}
 	}
 }

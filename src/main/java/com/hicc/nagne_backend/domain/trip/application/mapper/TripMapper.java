@@ -22,12 +22,13 @@ public class TripMapper {
 				.build();
 	}
 
-	public static List<TripResponse.TripSimpleResponse> mapToTripInfoResponseList(List<Trip> tripList) {
+	public static List<TripResponse.TripSimpleResponse> mapToTripInfoResponseList(List<Trip> tripList, Long tripCount) {
 		return tripList.stream()
 				.map(trip -> TripResponse.TripSimpleResponse.builder()
 						.address(trip.getAddress())
 						.title(trip.getTitle())
 						.tripId(trip.getId())
+						.tripCount(tripCount)
 						.build())
 				.collect(Collectors.toList());
 	}
