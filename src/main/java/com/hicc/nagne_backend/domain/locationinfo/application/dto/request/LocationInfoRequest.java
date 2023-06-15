@@ -1,4 +1,4 @@
-package com.hicc.nagne_backend.domain.locationinfo.application.dto;
+package com.hicc.nagne_backend.domain.locationinfo.application.dto.request;
 
 
 import lombok.Builder;
