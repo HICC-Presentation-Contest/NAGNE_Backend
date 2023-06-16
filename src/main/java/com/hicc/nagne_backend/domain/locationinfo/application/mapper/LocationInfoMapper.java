@@ -13,16 +13,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LocationInfoMapper
 {
-    public static List<LocationInfo> mapToLocationInfo(Trip trip, List<LocationInfoRequest.LocationInfoCreate> locationInfoCreate) {
-          return locationInfoCreate.stream()
-                .map(locationInfo -> LocationInfo.builder()
-                        .trip(trip)
-                        .address(locationInfo.getAddress())
-                        .description(locationInfo.getDescription())
-                        .sequence(locationInfo.getSequence())
-                        .build())
-                .collect(Collectors.toList());
-    }
 
     public static List<LocationInfoResponse.LocationInfoUserResponse> mapToLocationInfoUserResponse(List<LocationInfo> locationInfoList) {
         return locationInfoList.stream()
@@ -31,5 +21,14 @@ public class LocationInfoMapper
                         .sequence(locationInfo.getSequence())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    public static LocationInfo mapToLocationInfo(Trip trip, LocationInfoRequest.LocationInfoCreate locationInfoCreate) {
+        return LocationInfo.builder()
+                .trip(trip)
+                .address(locationInfoCreate.getAddress())
+                .description(locationInfoCreate.getDescription())
+                .sequence(locationInfoCreate.getSequence())
+                .build();
     }
 }
