@@ -1,6 +1,7 @@
 package com.hicc.nagne_backend.domain.locationimage.domain.entity;
 
 import com.hicc.nagne_backend.common.domain.BaseTimeEntity;
+import com.hicc.nagne_backend.domain.locationinfo.domain.entity.LocationInfo;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,12 +22,11 @@ public class LocationImage extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_info_id")
-    private LocationImage locationImage;
+    private LocationInfo locationInfo;
 
     @Builder
-
-    public LocationImage(String imageUrl, LocationImage locationImage) {
+    public LocationImage(String imageUrl, LocationInfo locationInfo) {
         this.imageUrl = imageUrl;
-        this.locationImage = locationImage;
+        this.locationInfo = locationInfo;
     }
 }

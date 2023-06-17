@@ -14,12 +14,12 @@ public class UserController {
     private final UserGetUseCase userGetUseCase;
     private final UserUpdateUseCase userUpdateUseCase;
 
-    @GetMapping("/user/{userId}")
-    public UserResponse.UserInfoResponse getUser(@PathVariable Long userId){
+    @GetMapping( "/user")
+    public UserResponse.UserInfoResponse getUser(@RequestParam(required = false) Long userId){
         return userGetUseCase.getUser(userId);
     }
 
-    @PostMapping("/user")   // 4개의 필드 다 바꿀 수 있는건가?
+    @PostMapping("/user")// 4개의 필드 모두 변경 가능
     public void updateUser(@RequestBody UserRequest.UserUpdateRequest userUpdateRequest) {
         userUpdateUseCase.updateUser(userUpdateRequest);
     }

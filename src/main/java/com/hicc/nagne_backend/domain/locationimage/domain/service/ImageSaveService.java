@@ -1,12 +1,14 @@
 package com.hicc.nagne_backend.domain.locationimage.domain.service;
 
+import com.hicc.nagne_backend.common.annotation.DomainService;
 import com.hicc.nagne_backend.domain.locationimage.domain.entity.LocationImage;
 import com.hicc.nagne_backend.domain.locationimage.domain.repostiory.LocationImageRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@DomainService
 @RequiredArgsConstructor
+@Transactional
 public class ImageSaveService {
 
     private final LocationImageRepository locationImageRepository;

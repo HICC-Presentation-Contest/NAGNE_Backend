@@ -2,10 +2,12 @@ package com.hicc.nagne_backend.domain.user.application.dto.request;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class UserRequest {
 
     @Getter
+    @NoArgsConstructor
     public static class UserUpdateRequest {
         private Long userId;
         private String name;

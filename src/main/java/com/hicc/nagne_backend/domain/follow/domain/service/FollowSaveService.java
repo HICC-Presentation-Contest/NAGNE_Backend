@@ -1,13 +1,15 @@
 package com.hicc.nagne_backend.domain.follow.domain.service;
 
+import com.hicc.nagne_backend.common.annotation.DomainService;
 import com.hicc.nagne_backend.domain.follow.domain.entity.Follow;
 import com.hicc.nagne_backend.domain.follow.domain.repository.FollowRepository;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@DomainService
 @RequiredArgsConstructor
+@Transactional
 public class FollowSaveService {
 
     private final FollowRepository followRepository;
