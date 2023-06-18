@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 @DomainService
 @RequiredArgsConstructor
 @Transactional
-public class ImageSaveService {
+public class LocationImageSaveService {
 
     private final LocationImageRepository locationImageRepository;
     public void saveImage(LocationImage locationImage){
