@@ -42,7 +42,6 @@ public class KakaoAddressConvertLatitudeLongitudeServiceImpl implements AddressC
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(tripAddress).append(" ").append(LocationAddress);
         String city = stringBuilder.toString();
-//        String city = "서울특별시 영등포구 맘스터치";
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -68,8 +67,6 @@ public class KakaoAddressConvertLatitudeLongitudeServiceImpl implements AddressC
         }
 
         ResponseEntity<String> simpleResponse = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
-        ResponseEntity<KakaoMapResponse> response = restTemplate.exchange(uri, HttpMethod.GET, entity, KakaoMapResponse.class);
-
         JSONParser jsonParser = new JSONParser();
         JSONObject parse = null;
         try {
@@ -91,8 +88,6 @@ public class KakaoAddressConvertLatitudeLongitudeServiceImpl implements AddressC
             String place_name = (String) jsonObject.get("place_name");
             kakaoMapResponse = new KakaoMapResponse(place_name, x, y);
         }
-
-//        KakaoMapResponse kakaoMapResponse = response.getBody();
 
         return Address.builder()
                 .address(LocationAddress)
