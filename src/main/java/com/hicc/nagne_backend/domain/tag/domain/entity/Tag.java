@@ -1,5 +1,6 @@
 package com.hicc.nagne_backend.domain.tag.domain.entity;
 
+import com.hicc.nagne_backend.common.domain.BaseTimeEntity;
 import com.hicc.nagne_backend.domain.trip.domain.entity.Trip;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Tag {
+public class Tag extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_id")

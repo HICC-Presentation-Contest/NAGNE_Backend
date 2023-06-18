@@ -1,5 +1,6 @@
 package com.hicc.nagne_backend.domain.bookmark.domain.entity;
 
+import com.hicc.nagne_backend.common.domain.BaseTimeEntity;
 import com.hicc.nagne_backend.domain.trip.domain.entity.Trip;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import lombok.AccessLevel;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BookMark {
+public class BookMark extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bookmark_id")
