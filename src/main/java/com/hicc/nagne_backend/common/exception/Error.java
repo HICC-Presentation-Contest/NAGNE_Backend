@@ -13,7 +13,10 @@ public enum Error {
 	EXPIRED_TOKEN("토큰 만료", 7001),
 
 	//S3
-	FILE_UPLOAD_ERROR("파일 업로드에 실패하였습니다.", 2000);
+	FILE_UPLOAD_ERROR("파일 업로드에 실패하였습니다.", 2000),
+
+	// kakao map
+	KAKAO_MAP_ERROR("카카오 맵 API 요청에 실패하였습니다.", 3000);
 
 	private final String message;
 	private final int errorCode;
