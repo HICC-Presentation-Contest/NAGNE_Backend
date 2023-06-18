@@ -4,11 +4,13 @@ package com.hicc.nagne_backend.domain.locationinfo.application.dto.request;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 public class LocationInfoRequest {
 
     @Getter
+    @Setter
     @NoArgsConstructor
     public static class LocationInfoCreate {
 

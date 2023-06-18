@@ -5,12 +5,15 @@ import com.hicc.nagne_backend.domain.tag.application.dto.TagRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import java.util.List;
 
 public class TripRequest {
 
     @Getter
+    @Setter
     @NoArgsConstructor
     public static class TripCreateRequest {
         private String address;

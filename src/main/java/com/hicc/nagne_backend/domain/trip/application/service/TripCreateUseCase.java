@@ -3,9 +3,12 @@ package com.hicc.nagne_backend.domain.trip.application.service;
 import com.hicc.nagne_backend.common.annotation.UseCase;
 import com.hicc.nagne_backend.common.util.UserUtils;
 import com.hicc.nagne_backend.domain.locationimage.application.mapper.LocationImageMapper;
-import com.hicc.nagne_backend.domain.locationimage.domain.service.ImageSaveService;
+import com.hicc.nagne_backend.domain.locationimage.domain.service.LocationImageSaveService;
+import com.hicc.nagne_backend.domain.locationinfo.application.dto.request.LocationInfoRequest;
 import com.hicc.nagne_backend.domain.locationinfo.application.mapper.LocationInfoMapper;
+import com.hicc.nagne_backend.domain.locationinfo.domain.entity.Address;
 import com.hicc.nagne_backend.domain.locationinfo.domain.entity.LocationInfo;
+import com.hicc.nagne_backend.domain.locationinfo.domain.service.AddressConvertLatitudeLongitudeService;
 import com.hicc.nagne_backend.domain.locationinfo.domain.service.LocationInfoSaveService;
 import com.hicc.nagne_backend.domain.s3.infrastructure.S3UploadService;
 import com.hicc.nagne_backend.domain.tag.application.mapper.TagMapper;
@@ -18,6 +21,8 @@ import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+
 @UseCase
 @RequiredArgsConstructor
 @Transactional
@@ -28,7 +33,9 @@ public class TripCreateUseCase {
     private final LocationInfoSaveService locationInfoSaveService;
     private final UserUtils userUtils;
     private final S3UploadService s3UploadService;
-    private final ImageSaveService imageSaveService;
+    private final LocationImageSaveService locationImageSaveService;
+    private final AddressConvertLatitudeLongitudeService addressConvertLatitudeLongitudeService;
+    private final EntityManager entityManager;
 
     @Transactional
     public void createTrip(TripRequest.TripCreateRequest tripCreateRequest) {
@@ -42,10 +49,11 @@ public class TripCreateUseCase {
                 tagSaveService.save(TagMapper.mapToTag(trip, tagCreate)));
 
         tripCreateRequest.getLocationInfo().forEach(locationInfoCreateRequest -> {
-            LocationInfo locationInfo = LocationInfoMapper.mapToLocationInfo(trip, locationInfoCreateRequest);
+            Address address = addressConvertLatitudeLongitudeService.convertAddressToLatitudeLongitude(trip.getAddress(),locationInfoCreateRequest.getAddress());
+            LocationInfo locationInfo = LocationInfoMapper.mapToLocationInfo(trip, locationInfoCreateRequest, address);
             locationInfoSaveService.save(locationInfo);
             String imgUrl = s3UploadService.upload(locationInfoCreateRequest.getLocationImage());
-            imageSaveService.saveImage(LocationImageMapper.mapToLocationImage(imgUrl, locationInfo));
+            locationImageSaveService.saveImage(LocationImageMapper.mapToLocationImage(imgUrl, locationInfo));
         });
     }
 }
