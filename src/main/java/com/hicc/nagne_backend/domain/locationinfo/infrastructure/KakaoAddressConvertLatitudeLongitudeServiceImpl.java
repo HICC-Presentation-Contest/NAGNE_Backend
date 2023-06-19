@@ -38,48 +38,31 @@ public class KakaoAddressConvertLatitudeLongitudeServiceImpl implements AddressC
     @Value("${kakao.rest-api-key}")
     private String kakaoRestApiKey;
 
-    public Address convertAddressToLatitudeLongitude(String tripAddress, String LocationAddress) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(tripAddress).append(" ").append(LocationAddress);
-        String city = stringBuilder.toString();
+    public Address convertAddressToLatitudeLongitude(String tripAddress, String placeName) {
+        final String city = getFullAddress(tripAddress, placeName);
+        final HttpEntity<String> entity = getKakaoMapApiRequestHttpEntity();
+        final String encode = encodingFullAddress(city);
+        final String url = getKakaoMapApiUrl(encode);
+        final URI uri = getUri(url);
+        final ResponseEntity<String> kakaoMapApiResponse = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
+        final JSONArray documents = getJsonArray(kakaoMapApiResponse);
+        final KakaoMapResponse kakaoMapResponse = parseKakaoMapResponse(documents);
+        return Address.builder()
+                .placeName(placeName)
+                .latitude(kakaoMapResponse.getY())
+                .longitude(kakaoMapResponse.getX())
+                .build();
+    }
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+    private static String getKakaoMapApiUrl(String encode) {
+        final String url = "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + encode +"&size=1";
+        return url;
+    }
 
-        String key = kakaoRestApiKey;
-        httpHeaders.set("Authorization", "KakaoAK " + key);
-
-        HttpEntity<String> entity = new HttpEntity<>("parameters", httpHeaders);
-        String encode;
-        try {
-            encode = URLEncoder.encode(city, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new BusinessException(Error.KAKAO_MAP_ERROR);
-        }
-
-        String url = "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + encode+"&size=1";
-
-        URI uri;
-        try {
-            uri = new URI(url);
-        } catch (URISyntaxException e) {
-            throw new BusinessException(Error.KAKAO_MAP_ERROR);
-        }
-
-        ResponseEntity<String> simpleResponse = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
-        JSONParser jsonParser = new JSONParser();
-        JSONObject parse = null;
-        try {
-            parse = (JSONObject) jsonParser.parse(simpleResponse.getBody());
-        } catch (ParseException e) {
-            e.getStackTrace();
-            throw new BusinessException(Error.KAKAO_MAP_ERROR);
-        }
-        JSONArray documents = (JSONArray) parse.get("documents");
-
+    private static KakaoMapResponse parseKakaoMapResponse(JSONArray documents) {
         final KakaoMapResponse kakaoMapResponse;
-
         if(documents.isEmpty()){
+
             kakaoMapResponse = new KakaoMapResponse("0", "0", "0");
         }else{
             JSONObject jsonObject = (JSONObject) documents.get(0);
@@ -88,12 +71,57 @@ public class KakaoAddressConvertLatitudeLongitudeServiceImpl implements AddressC
             String place_name = (String) jsonObject.get("place_name");
             kakaoMapResponse = new KakaoMapResponse(place_name, x, y);
         }
+        return kakaoMapResponse;
+    }
 
-        return Address.builder()
-                .address(LocationAddress)
-                .latitude(kakaoMapResponse.getY())
-                .longitude(kakaoMapResponse.getX())
-                .build();
+    private static JSONArray getJsonArray(ResponseEntity<String> simpleResponse) {
+        JSONParser jsonParser = new JSONParser();
+        JSONObject parse;
+        try {
+            parse = (JSONObject) jsonParser.parse(simpleResponse.getBody());
+        } catch (ParseException e) {
+            e.getStackTrace();
+            throw new BusinessException(Error.KAKAO_MAP_ERROR);
+        }
+        JSONArray documents = (JSONArray) parse.get("documents");
+        return documents;
+    }
+
+    private static URI getUri(String url) {
+        URI uri;
+        try {
+            uri = new URI(url);
+        } catch (URISyntaxException e) {
+            throw new BusinessException(Error.KAKAO_MAP_ERROR);
+        }
+        return uri;
+    }
+
+    private static String encodingFullAddress(String fullAddress) {
+        final String encode;
+        try {
+            encode = URLEncoder.encode(fullAddress, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new BusinessException(Error.KAKAO_MAP_ERROR);
+        }
+        return encode;
+    }
+
+    private static String getFullAddress(String tripAddress, String LocationAddress) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(tripAddress).append(" ").append(LocationAddress);
+        String city = stringBuilder.toString();
+        return city;
+    }
+
+    private HttpEntity<String> getKakaoMapApiRequestHttpEntity() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        String key = kakaoRestApiKey;
+        httpHeaders.set("Authorization", "KakaoAK " + key);
+        HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
+        return entity;
     }
 
     @Getter
