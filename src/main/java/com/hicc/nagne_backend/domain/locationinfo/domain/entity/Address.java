@@ -12,13 +12,13 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Address {
 
-    private String address;
+    private String placeName;
     private String longitude;
     private String latitude;
 
     @Builder
-    public Address(String address, String longitude, String latitude) {
-        this.address = address;
+    public Address(String placeName, String longitude, String latitude) {
+        this.placeName = placeName;
         this.longitude = longitude;
         this.latitude = latitude;
     }

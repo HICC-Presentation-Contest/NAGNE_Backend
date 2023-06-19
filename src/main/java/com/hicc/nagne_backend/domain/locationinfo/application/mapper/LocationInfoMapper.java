@@ -18,7 +18,7 @@ public class LocationInfoMapper
     public static List<LocationInfoResponse.LocationInfoUserResponse> mapToLocationInfoUserResponse(List<LocationInfo> locationInfoList) {
         return locationInfoList.stream()
                 .map(locationInfo -> LocationInfoResponse.LocationInfoUserResponse.builder()
-                        .place(locationInfo.getAddress().getAddress())
+                        .place(locationInfo.getAddress().getPlaceName())
                         .sequence(locationInfo.getSequence())
                         .build())
                 .collect(Collectors.toList());
