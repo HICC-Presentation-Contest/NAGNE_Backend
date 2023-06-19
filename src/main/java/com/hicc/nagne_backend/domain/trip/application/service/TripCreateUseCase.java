@@ -35,7 +35,6 @@ public class TripCreateUseCase {
     private final S3UploadService s3UploadService;
     private final LocationImageSaveService locationImageSaveService;
     private final AddressConvertLatitudeLongitudeService addressConvertLatitudeLongitudeService;
-    private final EntityManager entityManager;
 
     @Transactional
     public void createTrip(TripRequest.TripCreateRequest tripCreateRequest) {
