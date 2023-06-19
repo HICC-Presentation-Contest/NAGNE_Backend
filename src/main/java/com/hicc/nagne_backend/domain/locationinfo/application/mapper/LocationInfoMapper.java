@@ -32,4 +32,13 @@ public class LocationInfoMapper
                 .sequence(locationInfoCreate.getSequence())
                 .build();
     }
+
+    public static LocationInfoResponse.LocationInfoDetailsResponse mapToLocationInfoDetailsResponse(LocationInfo locationInfo, String imageUrl) {
+        return LocationInfoResponse.LocationInfoDetailsResponse.builder()
+                .place(locationInfo.getAddress().getPlaceName())
+                .description(locationInfo.getDescription())
+                .sequence(locationInfo.getSequence())
+                .imageUrl(imageUrl)
+                .build();
+    }
 }

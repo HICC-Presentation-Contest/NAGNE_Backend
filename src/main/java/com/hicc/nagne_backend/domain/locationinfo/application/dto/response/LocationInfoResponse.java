@@ -18,4 +18,20 @@ public class LocationInfoResponse {
             this.sequence = sequence;
         }
     }
+
+    @Getter
+    public static class LocationInfoDetailsResponse{
+        private String place;
+        private String description;
+        private String sequence;
+        private String imageUrl;
+
+        @Builder
+        public LocationInfoDetailsResponse(String place, String description, String sequence, String imageUrl) {
+            this.place = place;
+            this.description = description;
+            this.sequence = sequence;
+            this.imageUrl = imageUrl;
+        }
+    }
 }
