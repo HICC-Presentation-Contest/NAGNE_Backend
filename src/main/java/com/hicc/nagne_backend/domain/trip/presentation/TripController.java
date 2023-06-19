@@ -22,7 +22,7 @@ public class TripController {
 	 */
 	@GetMapping("/trip")
 	public void getSimpleTrip(){
-
+		
 	}
 
 	/**
@@ -34,7 +34,7 @@ public class TripController {
 	}
 
 	@PostMapping("/trip")
-	public void createTrip(@RequestBody TripRequest.TripCreateRequest tripCreateRequest) throws IOException {
+	public void createTrip(@ModelAttribute TripRequest.TripCreateRequest tripCreateRequest) {
 		tripCreateUseCase.createTrip(tripCreateRequest);
 	}
 
