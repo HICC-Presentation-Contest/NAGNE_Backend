@@ -4,9 +4,9 @@ import com.hicc.nagne_backend.common.annotation.DomainService;
 import com.hicc.nagne_backend.domain.trip.domain.entity.Trip;
 import com.hicc.nagne_backend.domain.trip.domain.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @DomainService
 @RequiredArgsConstructor
@@ -21,8 +21,8 @@ public class TripQueryService {
 		return trip;
 	}
 
-	public List<Trip> findByUserId(Long userId){
-		List<Trip> tripList = tripRepository.findByUserId(userId);
+	public Slice<Trip> findByUserId(Long userId, Pageable pageable){
+		Slice<Trip> tripList = tripRepository.findByUserId(userId, pageable);
 		return tripList;
 	}
 

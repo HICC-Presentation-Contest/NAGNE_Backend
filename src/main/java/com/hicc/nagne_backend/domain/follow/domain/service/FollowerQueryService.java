@@ -4,9 +4,9 @@ import com.hicc.nagne_backend.common.annotation.DomainService;
 import com.hicc.nagne_backend.domain.follow.domain.entity.Follow;
 import com.hicc.nagne_backend.domain.follow.domain.repository.FollowRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @DomainService
 @RequiredArgsConstructor
@@ -15,8 +15,8 @@ public class FollowerQueryService {
 
     private final FollowRepository followRepository;
 
-    public List<Follow> findFollowerListById(Long receiverId) {
-        List<Follow> senderList = followRepository.findByReceiverId(receiverId);
+    public Slice<Follow> findFollowerListById(Long receiverId, Pageable pageable) {
+        Slice<Follow> senderList = followRepository.findByReceiverId(receiverId, pageable);
         return senderList;
 
     }

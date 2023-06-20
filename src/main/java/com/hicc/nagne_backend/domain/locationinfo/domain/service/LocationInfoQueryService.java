@@ -14,6 +14,7 @@ import java.util.List;
 public class LocationInfoQueryService {
 
     private final LocationInfoRepository locationInfoRepository;
+
     public List<LocationInfo> findByTripId(Long tripId){
         return locationInfoRepository.findByTripId(tripId);
     }

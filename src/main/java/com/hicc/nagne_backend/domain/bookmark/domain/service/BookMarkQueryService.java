@@ -4,9 +4,9 @@ import com.hicc.nagne_backend.common.annotation.DomainService;
 import com.hicc.nagne_backend.domain.bookmark.domain.entity.BookMark;
 import com.hicc.nagne_backend.domain.bookmark.domain.repository.BookMarkRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @DomainService
 @RequiredArgsConstructor
@@ -15,8 +15,8 @@ public class BookMarkQueryService {
 
     private final BookMarkRepository bookMarkRepository;
 
-    public List<BookMark> findByUserId(Long userId){
-        List<BookMark> bookMarkList = bookMarkRepository.findByUserId(userId);
+    public Slice<BookMark> findByUserId(Long userId,  Pageable pageable){
+        Slice<BookMark> bookMarkList = bookMarkRepository.findByUserId(userId, pageable);
         return bookMarkList;
     }
 }

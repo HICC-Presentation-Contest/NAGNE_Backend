@@ -9,7 +9,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TripMapper {
@@ -24,15 +23,12 @@ public class TripMapper {
 				.build();
 	}
 
-	public static List<TripResponse.TripSimpleResponse> mapToTripInfoResponseList(List<Trip> tripList, Long tripCount) {
-		return tripList.stream()
-				.map(trip -> TripResponse.TripSimpleResponse.builder()
-						.address(trip.getAddress())
-						.title(trip.getTitle())
-						.tripId(trip.getId())
-						.tripCount(tripCount)
-						.build())
-				.collect(Collectors.toList());
+	public static TripResponse.TripSimpleResponse mapToTripSimpleResponse(Trip trip) {
+		return TripResponse.TripSimpleResponse.builder()
+				.address(trip.getAddress())
+				.title(trip.getTitle())
+				.tripId(trip.getId())
+				.build();
 	}
 
 	public static Trip mapToTrip(TripRequest.TripCreateRequest tripCreateRequest, User user) {
