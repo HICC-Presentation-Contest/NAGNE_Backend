@@ -39,7 +39,7 @@ public class TripGetUseCase {
         return tripInfoResponse;
     }
 
-    public SliceResponse<TripResponse.TripSimpleResponse> getTripList(Long userId, Pageable pageable) {
+    public SliceResponse<TripResponse.TripSimpleResponse> getTripListByUserId(Long userId, Pageable pageable) {
         Slice<Trip> tripList = tripQueryService.findByUserId(userId, pageable);
 
         Slice<TripResponse.TripSimpleResponse> TripSimpleResponseList =

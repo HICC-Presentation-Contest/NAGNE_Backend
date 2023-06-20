@@ -40,8 +40,8 @@ public class TripController {
 	}
 
 	@GetMapping("/trip/user/{userId}")
-	public SliceResponse<TripResponse.TripSimpleResponse> getTripList(@PathVariable Long userId, Pageable pageable){
-		return tripGetUseCase.getTripList(userId, pageable);
+	public SliceResponse<TripResponse.TripSimpleResponse> getTripListByUserId(@PathVariable Long userId, Pageable pageable){
+		return tripGetUseCase.getTripListByUserId(userId, pageable);
 	}
 
 	@GetMapping("/trip/user/{userId}/count")
