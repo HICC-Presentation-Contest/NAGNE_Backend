@@ -5,16 +5,19 @@ import com.hicc.nagne_backend.domain.bookmark.domain.entity.BookMark;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BookMarkMapper {
-    public static List<BookMarkResponse.BookMarkInfoResponse> mapToBookMarkList (List<BookMark> bookMarkList) {
-        return bookMarkList.stream()
-                .map(bookMark -> BookMarkResponse.BookMarkInfoResponse.builder()
-                        .tripId(bookMark.getTrip().getId())
-                        .build())
-                .collect(Collectors.toList());
+//    public static Slice<BookMarkResponse.BookMarkInfoResponse> mapToBookMarkList (Slice<BookMark> bookMarkList) {
+//        return bookMarkList.stream()
+//                .map(bookMark -> BookMarkResponse.BookMarkInfoResponse.builder()
+//                        .tripId(bookMark.getTrip().getId())
+//                        .build())
+//                .collect(Collectors.toCollection(Slice::));
+//    }
+
+    public static BookMarkResponse.BookMarkInfoResponse mapToBookMarkInfoResponse (BookMark bookMark) {
+        return BookMarkResponse.BookMarkInfoResponse.builder()
+                .tripId(bookMark.getTrip().getId())
+                .build();
     }
 }

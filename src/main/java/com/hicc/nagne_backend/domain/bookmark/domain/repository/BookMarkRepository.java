@@ -1,11 +1,11 @@
 package com.hicc.nagne_backend.domain.bookmark.domain.repository;
 
 import com.hicc.nagne_backend.domain.bookmark.domain.entity.BookMark;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 
 public interface BookMarkRepository extends JpaRepository<BookMark, Long> {
 
-    List<BookMark> findByUserId(Long userId);
+    Slice<BookMark> findByUserId(Long userId, Pageable pageable);
 }
