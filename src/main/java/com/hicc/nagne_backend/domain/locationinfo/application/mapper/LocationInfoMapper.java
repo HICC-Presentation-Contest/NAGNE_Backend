@@ -11,12 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LocationInfoMapper
 {
-    public static LocationInfoResponse.LocationInfoUserResponse mapToLocationInfoUserResponse(LocationInfo locationInfo) {
-        return LocationInfoResponse.LocationInfoUserResponse.builder()
-                .place(locationInfo.getAddress().getPlaceName())
-                .sequence(locationInfo.getSequence())
-                .build();
-    }
 
     public static LocationInfo mapToLocationInfo(Trip trip, LocationInfoRequest.LocationInfoCreate locationInfoCreate, Address address) {
         return LocationInfo.builder()
