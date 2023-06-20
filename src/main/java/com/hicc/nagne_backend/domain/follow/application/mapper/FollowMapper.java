@@ -5,24 +5,21 @@ import com.hicc.nagne_backend.domain.follow.domain.entity.Follow;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FollowMapper {
-    public static List<FollowResponse.FollowInfoResponse> mapToFollowerList(List<Follow> followList) {
-        return followList.stream()
-                .map(follow -> FollowResponse.FollowInfoResponse.builder()
-                        .userId(follow.getSender().getId())
-                        .build())
-                .collect(Collectors.toList());
+    public static FollowResponse.FollowInfoResponse mapToFollowerInfoResponse(Follow follow) {
+        return FollowResponse.FollowInfoResponse.builder()
+                .userId(follow.getSender().getId())
+                .name(follow.getSender().getName())
+                .profileImage(follow.getSender().getProfileUrl())
+                .build();
     }
 
-    public static List<FollowResponse.FollowInfoResponse> mapToFollowingList(List<Follow> followList) {
-        return followList.stream()
-                .map(follow -> FollowResponse.FollowInfoResponse.builder()
-                        .userId(follow.getReceiver().getId())
-                        .build())
-                .collect(Collectors.toList());
+    public static FollowResponse.FollowInfoResponse mapToFollowingInfoResponse(Follow follow) {
+        return FollowResponse.FollowInfoResponse.builder()
+                .userId(follow.getReceiver().getId())
+                .name(follow.getReceiver().getName())
+                .profileImage(follow.getReceiver().getProfileUrl())
+                .build();
     }
 }

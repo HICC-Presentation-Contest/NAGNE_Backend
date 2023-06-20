@@ -9,9 +9,14 @@ public class FollowResponse {
     public static class FollowInfoResponse {
         private long userId;
 
+        private String name;
+        private String profileImage;
+
         @Builder
-        public FollowInfoResponse(long userId) {
+        public FollowInfoResponse(long userId, String name, String profileImage) {
             this.userId = userId;
+            this.name = name;
+            this.profileImage = profileImage;
         }
     }
 }
