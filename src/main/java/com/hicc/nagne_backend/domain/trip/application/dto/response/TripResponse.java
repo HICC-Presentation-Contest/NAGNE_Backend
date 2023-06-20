@@ -36,14 +36,12 @@ public class TripResponse {
 		private Long tripId;
 		private String address;
 		private String title;
-		private Long tripCount;
 
 		@Builder
-		public TripSimpleResponse(Long tripId, String address, String title, Long tripCount) {
+		public TripSimpleResponse(Long tripId, String address, String title) {
 			this.tripId = tripId;
 			this.address = address;
 			this.title = title;
-			this.tripCount = tripCount;
 		}
 	}
 }
