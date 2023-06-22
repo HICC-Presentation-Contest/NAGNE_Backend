@@ -30,4 +30,29 @@ public class TripQueryService {
 		Long count = tripRepository.countByUserId(userId);
 		return count;
 	}
+
+	public Slice<Trip> findTripListByAddress(String address, Pageable pageable){
+		Slice<Trip> tripList = tripRepository.findTripListByAddress(address, pageable);
+		return tripList;
+	}
+
+	public Long countByAddress(String address){
+		Long count = tripRepository.countByAddress(address);
+		return count;
+	}
+
+	public Slice<Trip> findTripListByTag(String tagName, Pageable pageable){
+		Slice<Trip> tripList = tripRepository.findTripListByTag(tagName, pageable);
+		return tripList;
+	}
+
+	public Long countByTag(String tagName){
+		Long count = tripRepository.countByTag(tagName);
+		return count;
+	}
+
+	public Slice<Trip> findMainPageTripList(String address, Pageable pageable){
+		Slice<Trip> tripList = tripRepository.findMainPageTripList(address, pageable);
+		return tripList;
+	}
 }

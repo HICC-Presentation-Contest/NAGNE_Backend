@@ -23,11 +23,13 @@ public class TripMapper {
 				.build();
 	}
 
-	public static TripResponse.TripSimpleResponse mapToTripSimpleResponse(Trip trip) {
+	public static TripResponse.TripSimpleResponse mapToTripSimpleResponse(Trip trip, List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoUserResponseList) {
 		return TripResponse.TripSimpleResponse.builder()
 				.address(trip.getAddress())
 				.title(trip.getTitle())
 				.tripId(trip.getId())
+				.createdDate(trip.getCreatedDate())
+				.locationInfoList(locationInfoUserResponseList)
 				.build();
 	}
 
@@ -36,6 +38,15 @@ public class TripMapper {
 				.address(tripCreateRequest.getAddress())
 				.title(tripCreateRequest.getTitle())
 				.user(user)
+				.build();
+	}
+
+	public static TripResponse.TripSearchResponse mapToTripSearchResponse(Trip trip, List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoUserResponseList) {
+		return TripResponse.TripSearchResponse.builder()
+				.tripId(trip.getId())
+				.address(trip.getAddress())
+				.title(trip.getTitle())
+				.locationInfoList(locationInfoUserResponseList)
 				.build();
 	}
 

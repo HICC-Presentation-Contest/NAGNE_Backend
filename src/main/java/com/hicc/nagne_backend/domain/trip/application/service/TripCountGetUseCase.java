@@ -15,4 +15,12 @@ public class TripCountGetUseCase {
     public Long getTripCount(Long userId){
         return tripQueryService.countByUserId(userId);
     }
+
+    public Long getTripCountByAddress(String address){
+        return tripQueryService.countByAddress(address);
+    }
+
+    public Long getTripCountByTag(String tagName){
+        return tripQueryService.countByTag(tagName);
+    }
 }
