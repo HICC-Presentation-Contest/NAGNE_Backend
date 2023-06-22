@@ -1,20 +1,22 @@
 package com.hicc.nagne_backend.domain.locationinfo.application.dto.response;
 
+import com.hicc.nagne_backend.domain.locationinfo.domain.entity.Address;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 public class LocationInfoResponse {
 
+
     @Getter
     @NoArgsConstructor
-    public static class LocationInfoUserResponse {
-        private String place;
+    public static class LocationInfoSimpleResponse {
+        private String placeName;
         private String sequence;
 
         @Builder
-        public LocationInfoUserResponse(String place, String sequence) {
-            this.place = place;
+        public LocationInfoSimpleResponse(String placeName, String sequence) {
+            this.placeName = placeName;
             this.sequence = sequence;
         }
     }
@@ -34,4 +36,17 @@ public class LocationInfoResponse {
             this.imageUrl = imageUrl;
         }
     }
+
+    @Getter
+    public static class LocationInfoBookMarkResponse{
+        private Address address;
+        private String sequence;
+
+        @Builder
+        public LocationInfoBookMarkResponse(Address address, String sequence) {
+            this.address = address;
+            this.sequence = sequence;
+        }
+    }
+
 }
