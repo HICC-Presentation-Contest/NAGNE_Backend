@@ -63,6 +63,10 @@ dependencies {
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 	//querydsl 추가 끝
+
+
+	// swagger
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
 }
 
 tasks.named('test') {

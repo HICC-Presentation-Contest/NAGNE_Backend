@@ -8,6 +8,10 @@ public final class IgnoredPathConst {
 
 	public static final String[] IGNORED_PATHS = {
 			"/oauth2/**",
+			"/swagger-ui/index.html",
+			"/swagger-ui.html",
+			"/swagger-ui/**",
+			"/v3/api-docs/**",
 			"/info",
 			"/reissue",
 			"/favicon.ico"};

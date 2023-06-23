@@ -1,11 +1,19 @@
 package com.hicc.nagne_backend.domain.trip.presentation;
 
+import com.hicc.nagne_backend.common.exception.dto.ErrorResponse;
 import com.hicc.nagne_backend.common.slice.SliceResponse;
 import com.hicc.nagne_backend.domain.trip.application.dto.request.TripRequest;
 import com.hicc.nagne_backend.domain.trip.application.dto.response.TripResponse;
 import com.hicc.nagne_backend.domain.trip.application.service.TripCountGetUseCase;
 import com.hicc.nagne_backend.domain.trip.application.service.TripCreateUseCase;
 import com.hicc.nagne_backend.domain.trip.application.service.TripGetUseCase;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -19,14 +27,26 @@ public class TripController {
 	private final TripCreateUseCase tripCreateUseCase;
 	private final TripCountGetUseCase tripCountGetUseCase;
 
-
+	/**
+	 * Page<SimpleTripInfoResponse> 반환
+	 */
 	@GetMapping("/trip")
 	public Slice<TripResponse.TripSearchResponse> getMainPageTrip(@RequestParam String address, Pageable pageable){
 		return tripGetUseCase.getMainPageTrip(address, pageable);
 	}
 
+	/**
+	 * TripInfoResponse
+	 */
+	@Operation(summary = "여행 상세 정보 조회", tags = {"TripController"})
+	@ApiResponses({
+			@ApiResponse(responseCode = "200", description = "여행 상세 정보 조회 성공"),
+			@ApiResponse(responseCode = "404", description = "여행 상세 정보 조회 실패",
+			content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+	})
 	@GetMapping("/trip/{tripId}")
-	public TripResponse.TripInfoResponse getTrip(@PathVariable Long tripId){
+	public TripResponse.TripInfoResponse getTrip(
+			@Parameter(description = "여정 id", in = ParameterIn.PATH) @PathVariable Long tripId){
 		return tripGetUseCase.getTrip(tripId);
 	}
 
