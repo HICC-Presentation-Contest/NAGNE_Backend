@@ -3,6 +3,7 @@ package com.hicc.nagne_backend.domain.bookmark.presentation;
 import com.hicc.nagne_backend.common.exception.dto.ErrorResponse;
 import com.hicc.nagne_backend.common.slice.SliceResponse;
 import com.hicc.nagne_backend.domain.bookmark.application.dto.response.BookMarkResponse;
+import com.hicc.nagne_backend.domain.bookmark.application.service.BookMarkCountGetUseCase;
 import com.hicc.nagne_backend.domain.bookmark.application.service.BookMarkCreateUseCase;
 import com.hicc.nagne_backend.domain.bookmark.application.service.BookMarkGetUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,6 +21,7 @@ public class BookMarkController {
 
     private final BookMarkGetUseCase bookMarkGetUseCase;
     private final BookMarkCreateUseCase bookMarkCreateUseCase;
+    private final BookMarkCountGetUseCase bookMarkCountGetUseCase;
 
     @Operation(summary = "북마크 조회", tags = {"BookMarkController"})
     @ApiResponses({
@@ -41,5 +43,16 @@ public class BookMarkController {
     @PostMapping("/bookmark")
     public void createBookMark(@RequestParam Long tripId){
         bookMarkCreateUseCase.createBookMark(tripId);
+    }
+
+    @Operation(summary = "북마크 총 갯수 조회", tags = {"BookMarkController"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "북마크 총 갯수 조회 성공"),
+            @ApiResponse(responseCode = "404", description = "북마크 총 갯수 조회 실패",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @PostMapping("/bookmark/count/{tripId}")
+    public Long getBookMarkCount(@PathVariable Long tripId){
+        return bookMarkCountGetUseCase.getBookMarkCount(tripId);
     }
 }

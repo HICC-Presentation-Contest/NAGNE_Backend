@@ -23,4 +23,8 @@ public class BookMarkQueryService {
     public boolean existsByUserIdAndTripId(Long userId, Long tripId){
         return bookMarkRepository.existsByUserIdAndTripId(userId, tripId);
     }
+
+    public Long countByTripId(Long tripId){
+        return bookMarkRepository.countByTripId(tripId);
+    }
 }

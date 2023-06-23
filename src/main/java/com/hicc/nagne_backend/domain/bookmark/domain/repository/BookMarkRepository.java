@@ -12,4 +12,6 @@ public interface BookMarkRepository extends JpaRepository<BookMark, Long> {
     boolean existsByUserIdAndTripId(Long userId, Long tripId);
 
     void deleteByUserIdAndTripId(Long userId, Long tripId);
+
+    Long countByTripId(Long tripId);
 }
