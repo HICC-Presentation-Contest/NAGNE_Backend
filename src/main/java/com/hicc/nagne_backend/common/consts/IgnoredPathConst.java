@@ -13,6 +13,7 @@ public final class IgnoredPathConst {
 			"/swagger-ui/**",
 			"/v3/api-docs/**",
 			"/info",
+			"/login/oauth2/google",
 			"/reissue",
 			"/favicon.ico"};
 }
