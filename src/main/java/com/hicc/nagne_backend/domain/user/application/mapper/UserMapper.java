@@ -26,4 +26,12 @@ public class UserMapper {
                 .build();
     }
 
+    public static User mapToUser(String name, String email, String profileImageUrl){
+        return User.builder()
+                .name(name)
+                .email(email)
+                .profileUrl(profileImageUrl)
+                .build();
+    }
+
 }
