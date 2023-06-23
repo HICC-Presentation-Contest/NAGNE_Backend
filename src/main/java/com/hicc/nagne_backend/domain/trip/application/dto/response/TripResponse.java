@@ -24,14 +24,18 @@ public class TripResponse {
 		private String title;
 		@Schema(description = "여행 장소 리스트", defaultValue = "locationInfoList")
 		private List<LocationInfoResponse.LocationInfoDetailsResponse> locationInfo;
+		@Schema(description = "북마크 여부", defaultValue = "false")
+		private boolean bookmark;
 
 		@Builder
-		public TripInfoResponse(long userId, String username, String address, String title, List<LocationInfoResponse.LocationInfoDetailsResponse> locationInfo) {
+		public TripInfoResponse(long userId, String username, String address, String title,
+								List<LocationInfoResponse.LocationInfoDetailsResponse> locationInfo, boolean bookmark) {
 			this.userId = userId;
 			this.username = username;
 			this.address = address;
 			this.title = title;
 			this.locationInfo = locationInfo;
+			this.bookmark = bookmark;
 		}
 	}
 
