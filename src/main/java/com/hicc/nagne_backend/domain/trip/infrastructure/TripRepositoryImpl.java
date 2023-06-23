@@ -82,6 +82,19 @@ public class TripRepositoryImpl implements TripRepositoryCustom {
         return getSliceImpl(tripList, pageable);
     }
 
+    @Override
+    public Slice<Trip> findMainPageTripListByPopularity(String address, Pageable pageable) {
+        List<Trip> tripList = jpaQueryFactory
+                .select(trip)
+                .from(trip)
+                .where(trip.address.contains(address))
+                .orderBy(trip.bookMarks.size().desc())
+                .fetch();
+
+       return getSliceImpl(tripList, pageable);
+
+    }
+
     private <T> Slice<T> getSliceImpl(List<T> list, Pageable pageable) {
         boolean hasNext = false;
         if (list.size() > pageable.getPageSize()) {

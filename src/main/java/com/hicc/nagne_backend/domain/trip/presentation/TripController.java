@@ -38,11 +38,26 @@ public class TripController {
 			@ApiResponse(responseCode = "404", description = "첫화면 여행 조회 실패",
 					content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	})
-	@Parameter(name = "address", description = "주소", in = QUERY)
+	@Parameter( name = "longitude", description = "경도", in = QUERY)
+	@Parameter( name = "latitude", description = "위도", in = QUERY)
 	@GetMapping("/trip")
 	public SliceResponse<TripResponse.TripMainPageResponse> getMainPageTrip(@RequestParam String longitude,
 																			@RequestParam String latitude, Pageable pageable){
 		return tripGetUseCase.getMainPageTrip(longitude, latitude, pageable);
+	}
+
+	@Operation(summary = "첫화면 인기순으로 여행 조회", tags = {"TripController"})
+	@ApiResponses({
+			@ApiResponse(responseCode = "200", description = "첫화면 인기순으로 여행 조회 성공"),
+			@ApiResponse(responseCode = "404", description = "첫화면 인기순으로 여행 조회 실패",
+					content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+	})
+	@Parameter( name = "longitude", description = "경도", in = QUERY)
+	@Parameter( name = "latitude", description = "위도", in = QUERY)
+	@GetMapping("/trip/popularity")
+	public SliceResponse<TripResponse.TripMainPageResponse> getMainPageTripByPopularity(@RequestParam String longitude,
+																			@RequestParam String latitude, Pageable pageable){
+		return tripGetUseCase.getMainPageTripByPopularity(longitude, latitude, pageable);
 	}
 
 	/**

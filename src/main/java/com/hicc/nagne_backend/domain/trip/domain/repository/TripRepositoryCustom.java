@@ -15,4 +15,6 @@ public interface TripRepositoryCustom {
     Long countByTag(String tag);
 
     Slice<Trip> findMainPageTripList(String address, Pageable pageable);
+
+    Slice<Trip> findMainPageTripListByPopularity(String address, Pageable pageable);
 }
