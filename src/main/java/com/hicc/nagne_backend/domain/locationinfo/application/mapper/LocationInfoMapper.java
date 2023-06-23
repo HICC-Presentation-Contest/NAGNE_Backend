@@ -42,4 +42,11 @@ public class LocationInfoMapper
                 .sequence(locationInfo.getSequence())
                 .build();
     }
+
+    public static LocationInfoResponse.LocationInfoMainPageResponse mapToLocationInfoMainPageResponse(LocationInfo locationInfo) {
+        return LocationInfoResponse.LocationInfoMainPageResponse.builder()
+                .address(locationInfo.getAddress())
+                .sequence(locationInfo.getSequence())
+                .build();
+    }
 }

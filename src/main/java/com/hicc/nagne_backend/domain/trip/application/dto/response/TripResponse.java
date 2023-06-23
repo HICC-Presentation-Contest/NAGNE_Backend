@@ -10,6 +10,27 @@ import java.util.List;
 
 public class TripResponse {
 
+	//첫화면
+	@Getter
+	public static class TripMainPageResponse {
+		@Schema(description = "여행 식별자", defaultValue = "tripId")
+		private Long tripId;
+		@Schema(description = "주소", defaultValue = "address")
+		private String address;
+		@Schema(description = "제목", defaultValue = "title")
+		private String title;
+		@Schema(description = "여행 장소 리스트", defaultValue = "locationInfoList")
+		private List<LocationInfoResponse.LocationInfoMainPageResponse> locationInfoList;
+
+		@Builder
+		public TripMainPageResponse(Long tripId, String address, String title,
+									List<LocationInfoResponse.LocationInfoMainPageResponse> locationInfoList) {
+			this.tripId = tripId;
+			this.address = address;
+			this.title = title;
+			this.locationInfoList = locationInfoList;
+		}
+	}
 
 	//여정통해서 여정정보 가져올때
 	@Getter
@@ -24,14 +45,18 @@ public class TripResponse {
 		private String title;
 		@Schema(description = "여행 장소 리스트", defaultValue = "locationInfoList")
 		private List<LocationInfoResponse.LocationInfoDetailsResponse> locationInfo;
+		@Schema(description = "북마크 여부", defaultValue = "false")
+		private boolean bookmark;
 
 		@Builder
-		public TripInfoResponse(long userId, String username, String address, String title, List<LocationInfoResponse.LocationInfoDetailsResponse> locationInfo) {
+		public TripInfoResponse(long userId, String username, String address, String title,
+								List<LocationInfoResponse.LocationInfoDetailsResponse> locationInfo, boolean bookmark) {
 			this.userId = userId;
 			this.username = username;
 			this.address = address;
 			this.title = title;
 			this.locationInfo = locationInfo;
+			this.bookmark = bookmark;
 		}
 	}
 
@@ -59,7 +84,7 @@ public class TripResponse {
 		}
 	}
 
-	//첫화면, 검색
+	//검색
 	@Getter
 	public static class TripSearchResponse {
 		@Schema(description = "여행 식별자", defaultValue = "tripId")

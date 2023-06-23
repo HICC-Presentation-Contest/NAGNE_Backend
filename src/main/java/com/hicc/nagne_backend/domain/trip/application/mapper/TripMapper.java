@@ -13,13 +13,14 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TripMapper {
 
-	public static TripResponse.TripInfoResponse mapToTripInfoResponse(Trip trip, List<LocationInfoResponse.LocationInfoDetailsResponse> locationInfoDetailsResponseList) {
+	public static TripResponse.TripInfoResponse mapToTripInfoResponse(Trip trip, List<LocationInfoResponse.LocationInfoDetailsResponse> locationInfoDetailsResponseList, boolean bookMark) {
 		return TripResponse.TripInfoResponse.builder()
 				.userId(trip.getUser().getId())
 				.username(trip.getUser().getName())
 				.address(trip.getAddress())
 				.title(trip.getTitle())
 				.locationInfo(locationInfoDetailsResponseList)
+				.bookmark(bookMark)
 				.build();
 	}
 
@@ -47,6 +48,15 @@ public class TripMapper {
 				.address(trip.getAddress())
 				.title(trip.getTitle())
 				.locationInfoList(locationInfoUserResponseList)
+				.build();
+	}
+
+	public static TripResponse.TripMainPageResponse mapToTripMainPageResponse(Trip trip, List<LocationInfoResponse.LocationInfoMainPageResponse> locationInfoMainPageResponseList) {
+		return TripResponse.TripMainPageResponse.builder()
+				.tripId(trip.getId())
+				.address(trip.getAddress())
+				.title(trip.getTitle())
+				.locationInfoList(locationInfoMainPageResponseList)
 				.build();
 	}
 

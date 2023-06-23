@@ -9,15 +9,15 @@ public class UserResponse {
     @Getter
     public static class UserInfoResponse {
 
-        @Schema(description = "유저 이름")
+        @Schema(description = "유저 이름", defaultValue = "name")
         private String name;
-        @Schema(description = "유저 설명")
+        @Schema(description = "유저 설명", defaultValue = "description")
         private String description;
-        @Schema(description = "유저 프로필 사진")
+        @Schema(description = "유저 프로필 사진", defaultValue = "profileImageUrl")
         private String profileImageUrl;
-        @Schema(description = "팔로워 수")
+        @Schema(description = "팔로워 수", defaultValue = "followerCount")
         private Long followerCount;
-        @Schema(description = "팔로잉 수")
+        @Schema(description = "팔로잉 수", defaultValue = "followingCount")
         private Long followingCount;
 
         @Builder

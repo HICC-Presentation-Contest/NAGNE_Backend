@@ -11,10 +11,9 @@ public class BookMarkResponse { //내가 저장한 bookMark
 
     @Getter
     public static class BookMarkInfoResponse{
-
-        @Schema(description = "여행 id")
+        @Schema(description = "여정 id", defaultValue = "tripId")
         private Long tripId;
-        @Schema(description = "여정 정보")
+        @Schema(description = "여정 정보", defaultValue = "locationInfo")
         private List<LocationInfoResponse.LocationInfoBookMarkResponse> locationInfo;
 
         @Builder
