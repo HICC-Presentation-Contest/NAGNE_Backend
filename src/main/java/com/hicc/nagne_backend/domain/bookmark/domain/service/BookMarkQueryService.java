@@ -19,4 +19,8 @@ public class BookMarkQueryService {
         Slice<BookMark> bookMarkList = bookMarkRepository.findByUserId(userId, pageable);
         return bookMarkList;
     }
+
+    public boolean existsByUserIdAndTripId(Long userId, Long tripId){
+        return bookMarkRepository.existsByUserIdAndTripId(userId, tripId);
+    }
 }
