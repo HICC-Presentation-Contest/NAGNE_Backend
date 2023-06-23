@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
@@ -47,7 +45,7 @@ public class AuthController {
             content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/login/oauth2/google")
-    public JwtTokenResponse googleLogin(HttpServletRequest request, @RequestParam("code") String code) {
-        return googleOAuthService.login(request, code);
+    public JwtTokenResponse googleLogin(@RequestParam("code") String code) {
+        return googleOAuthService.login(code);
     }
 }
