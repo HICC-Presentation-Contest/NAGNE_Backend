@@ -1,6 +1,7 @@
 package com.hicc.nagne_backend.domain.locationinfo.application.dto.response;
 
 import com.hicc.nagne_backend.domain.locationinfo.domain.entity.Address;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,7 +40,9 @@ public class LocationInfoResponse {
 
     @Getter
     public static class LocationInfoBookMarkResponse{
+        @Schema(description = "장소 정보")
         private Address address;
+        @Schema(description = "여행 순서")
         private String sequence;
 
         @Builder

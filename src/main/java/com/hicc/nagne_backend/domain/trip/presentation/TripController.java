@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import static io.swagger.v3.oas.annotations.enums.ParameterIn.PATH;
@@ -66,8 +67,13 @@ public class TripController {
 			@ApiResponse(responseCode = "404", description = "여행 등록 실패",
 					content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	})
-	@PostMapping("/trip")
-	public void createTrip(@ModelAttribute TripRequest.TripCreateRequest tripCreateRequest) {
+	@PostMapping(value = "/trip", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public void createTrip(
+			@Parameter(
+					description = "여행 생성 요청",
+					content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)
+			)
+			@ModelAttribute TripRequest.TripCreateRequest tripCreateRequest) {
 		tripCreateUseCase.createTrip(tripCreateRequest);
 	}
 
