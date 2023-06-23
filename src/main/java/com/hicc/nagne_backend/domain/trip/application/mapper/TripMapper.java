@@ -51,4 +51,13 @@ public class TripMapper {
 				.build();
 	}
 
+	public static TripResponse.TripMainPageResponse mapToTripMainPageResponse(Trip trip, List<LocationInfoResponse.LocationInfoMainPageResponse> locationInfoMainPageResponseList) {
+		return TripResponse.TripMainPageResponse.builder()
+				.tripId(trip.getId())
+				.address(trip.getAddress())
+				.title(trip.getTitle())
+				.locationInfoList(locationInfoMainPageResponseList)
+				.build();
+	}
+
 }

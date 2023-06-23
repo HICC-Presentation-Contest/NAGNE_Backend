@@ -46,13 +46,13 @@ public class TripQueryService {
 		return tripList;
 	}
 
-	public Long countByTag(String tagName){
-		Long count = tripRepository.countByTag(tagName);
-		return count;
-	}
-
 	public Slice<Trip> findMainPageTripList(String address, Pageable pageable){
 		Slice<Trip> tripList = tripRepository.findMainPageTripList(address, pageable);
 		return tripList;
 	}
+
+//	public Long countByTag(String tagName){
+//		Long count = tripRepository.countByTag(tagName);
+//		return count;
+//	}
 }

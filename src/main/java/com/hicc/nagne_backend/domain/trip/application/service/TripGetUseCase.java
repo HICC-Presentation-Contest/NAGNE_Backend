@@ -63,20 +63,33 @@ public class TripGetUseCase {
         return SliceResponse.of(TripSimpleResponseList);
     }
 
-    public Slice<TripResponse.TripSearchResponse> getTripListByAddress(String address, Pageable pageable){
+    public SliceResponse<TripResponse.TripSearchResponse> getTripListByAddress(String address, Pageable pageable){
     	Slice<Trip> tripList = tripQueryService.findTripListByAddress(address, pageable);
 
-        return getTripSearchResponseSlice(tripList);
+        return SliceResponse.of(getTripSearchResponseSlice(tripList));
+    }
+
+
+    public SliceResponse<TripResponse.TripMainPageResponse> getMainPageTrip(String address, Pageable pageable) {
+        Slice<Trip> tripList = tripQueryService.findMainPageTripList(address, pageable);
+
+        Slice<TripResponse.TripMainPageResponse> tripSearchResponseList =
+                tripList.map(trip ->
+                {
+                    Long tripId = trip.getId();
+                    List<LocationInfo> locationInfoListByTripId = locationInfoQueryService.findByTripId(tripId);
+                    List<LocationInfoResponse.LocationInfoMainPageResponse> LocationInfoMainPageResponseList =
+                            locationInfoListByTripId.stream().map(locationInfo -> {
+                                return LocationInfoMapper.mapToLocationInfoMainPageResponse(locationInfo);
+                            }).collect(Collectors.toList());
+                    return TripMapper.mapToTripMainPageResponse(trip, LocationInfoMainPageResponseList);
+                });
+
+        return SliceResponse.of(tripSearchResponseList);
     }
 
     public Slice getTripListByTag(String tagName, Pageable pageable) {
         Slice<Trip> tripList = tripQueryService.findTripListByTag(tagName, pageable);
-
-        return getTripSearchResponseSlice(tripList);
-    }
-
-    public Slice<TripResponse.TripSearchResponse> getMainPageTrip(String address, Pageable pageable) {
-        Slice<Trip> tripList = tripQueryService.findMainPageTripList(address, pageable);
 
         return getTripSearchResponseSlice(tripList);
     }

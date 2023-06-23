@@ -20,7 +20,7 @@ public class TripCountGetUseCase {
         return tripQueryService.countByAddress(address);
     }
 
-    public Long getTripCountByTag(String tagName){
-        return tripQueryService.countByTag(tagName);
-    }
+//    public Long getTripCountByTag(String tagName){
+//        return tripQueryService.countByTag(tagName);
+//    }
 }
