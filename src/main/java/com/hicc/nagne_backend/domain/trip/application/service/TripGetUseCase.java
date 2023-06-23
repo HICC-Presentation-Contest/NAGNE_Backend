@@ -5,6 +5,7 @@ import com.hicc.nagne_backend.common.slice.SliceResponse;
 import com.hicc.nagne_backend.domain.locationimage.domain.service.LocationImageQueryService;
 import com.hicc.nagne_backend.domain.locationinfo.application.dto.response.LocationInfoResponse;
 import com.hicc.nagne_backend.domain.locationinfo.application.mapper.LocationInfoMapper;
+import com.hicc.nagne_backend.domain.locationinfo.domain.entity.LocationInfo;
 import com.hicc.nagne_backend.domain.locationinfo.domain.service.LocationInfoQueryService;
 import com.hicc.nagne_backend.domain.trip.application.dto.response.TripResponse;
 import com.hicc.nagne_backend.domain.trip.application.mapper.TripMapper;
@@ -45,9 +46,48 @@ public class TripGetUseCase {
         Slice<TripResponse.TripSimpleResponse> TripSimpleResponseList =
                 tripList.map(trip ->
                 {
-                    return TripMapper.mapToTripSimpleResponse(trip);
+                    Long tripId = trip.getId();
+                    List<LocationInfo> locationInfoListByTripId = locationInfoQueryService.findByTripId(tripId);
+                    List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoUserResponseList =
+                            locationInfoListByTripId.stream().map(locationInfo -> {
+                                return LocationInfoMapper.mapToLocationInfoSimpleResponse(locationInfo);
+                            }).collect(Collectors.toList());
+                    return TripMapper.mapToTripSimpleResponse(trip, locationInfoUserResponseList);
                 });
 
         return SliceResponse.of(TripSimpleResponseList);
+    }
+
+    public Slice<TripResponse.TripSearchResponse> getTripListByAddress(String address, Pageable pageable){
+    	Slice<Trip> tripList = tripQueryService.findTripListByAddress(address, pageable);
+
+        return getTripSearchResponseSlice(tripList);
+    }
+
+    public Slice getTripListByTag(String tagName, Pageable pageable) {
+        Slice<Trip> tripList = tripQueryService.findTripListByTag(tagName, pageable);
+
+        return getTripSearchResponseSlice(tripList);
+    }
+
+    public Slice<TripResponse.TripSearchResponse> getMainPageTrip(String address, Pageable pageable) {
+        Slice<Trip> tripList = tripQueryService.findMainPageTripList(address, pageable);
+
+        return getTripSearchResponseSlice(tripList);
+    }
+
+    private Slice getTripSearchResponseSlice(Slice<Trip> tripList) {
+        Slice<TripResponse.TripSearchResponse> tripSearchResponseList =
+                tripList.map(trip ->
+                {
+                    Long tripId = trip.getId();
+                    List<LocationInfo> locationInfoListByTripId = locationInfoQueryService.findByTripId(tripId);
+                    List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoUserResponseList =
+                            locationInfoListByTripId.stream().map(locationInfo -> {
+                                return LocationInfoMapper.mapToLocationInfoSimpleResponse(locationInfo);
+                            }).collect(Collectors.toList());
+                    return TripMapper.mapToTripSearchResponse(trip, locationInfoUserResponseList);
+                });
+        return tripSearchResponseList;
     }
 }
