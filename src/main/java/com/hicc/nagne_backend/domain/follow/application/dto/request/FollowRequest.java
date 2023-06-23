@@ -10,12 +10,10 @@ public class FollowRequest {
     @Getter
     @NoArgsConstructor
     public static class FollowCreateRequest {
-        private long senderId;
         private long receiverId;
 
         @Builder
-        public FollowCreateRequest(long senderId, long receiverId) {
-            this.senderId = senderId;
+        public FollowCreateRequest(long receiverId) {
             this.receiverId = receiverId;
         }
     }

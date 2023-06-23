@@ -1,5 +1,6 @@
 package com.hicc.nagne_backend.domain.locationinfo.domain.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,8 +13,11 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Address {
 
+    @Schema(description = "장소 이름")
     private String placeName;
+    @Schema(description = "경도")
     private String longitude;
+    @Schema(description = "위도")
     private String latitude;
 
     @Builder
