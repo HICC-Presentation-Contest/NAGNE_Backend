@@ -9,6 +9,7 @@ import com.hicc.nagne_backend.domain.locationinfo.application.dto.response.Locat
 import com.hicc.nagne_backend.domain.locationinfo.application.mapper.LocationInfoMapper;
 import com.hicc.nagne_backend.domain.locationinfo.domain.entity.LocationInfo;
 import com.hicc.nagne_backend.domain.locationinfo.domain.service.LocationInfoQueryService;
+import com.hicc.nagne_backend.domain.locationinfo.infrastructure.KakaoLatitudeLongitudeConvertAddressServiceImpl;
 import com.hicc.nagne_backend.domain.trip.application.dto.response.TripResponse;
 import com.hicc.nagne_backend.domain.trip.application.mapper.TripMapper;
 import com.hicc.nagne_backend.domain.trip.domain.entity.Trip;
@@ -31,6 +32,7 @@ public class TripGetUseCase {
     private final LocationImageQueryService locationImageQueryService;
     private final UserUtils userUtils;
     private final BookMarkQueryService bookMarkQueryService;
+    private final KakaoLatitudeLongitudeConvertAddressServiceImpl kakaoLatitudeLongitudeConvertAddressService;
 
     public TripResponse.TripInfoResponse getTrip(Long tripId) {
         Trip trip = tripQueryService.findById(tripId);
@@ -80,7 +82,10 @@ public class TripGetUseCase {
                     List<LocationInfo> locationInfoListByTripId = locationInfoQueryService.findByTripId(tripId);
                     List<LocationInfoResponse.LocationInfoMainPageResponse> LocationInfoMainPageResponseList =
                             locationInfoListByTripId.stream().map(locationInfo -> {
-                                return LocationInfoMapper.mapToLocationInfoMainPageResponse(locationInfo);
+                                String latitude = locationInfo.getAddress().getLatitude();
+                                String longitude = locationInfo.getAddress().getLongitude();
+                                String addressName = kakaoLatitudeLongitudeConvertAddressService.convertLatitudeLongitudeToAddress(latitude, longitude);
+                                return LocationInfoMapper.mapToLocationInfoMainPageResponse(locationInfo, addressName);
                             }).collect(Collectors.toList());
                     return TripMapper.mapToTripMainPageResponse(trip, LocationInfoMainPageResponseList);
                 });

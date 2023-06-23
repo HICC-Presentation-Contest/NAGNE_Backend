@@ -12,13 +12,13 @@ public class LocationInfoResponse {
     @NoArgsConstructor
     public static class LocationInfoMainPageResponse {
         @Schema(description = "위치 정보", defaultValue = "address")
-        private Address address;
+        private String addressName;
         @Schema(description = "순서", defaultValue = "sequence")
         private String sequence;
 
         @Builder
-        public LocationInfoMainPageResponse(Address address, String sequence) {
-            this.address = address;
+        public LocationInfoMainPageResponse(String addressName, String sequence) {
+            this.addressName = addressName;
             this.sequence = sequence;
         }
     }

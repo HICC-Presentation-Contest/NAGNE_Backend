@@ -43,9 +43,9 @@ public class LocationInfoMapper
                 .build();
     }
 
-    public static LocationInfoResponse.LocationInfoMainPageResponse mapToLocationInfoMainPageResponse(LocationInfo locationInfo) {
+    public static LocationInfoResponse.LocationInfoMainPageResponse mapToLocationInfoMainPageResponse(LocationInfo locationInfo, String addressName) {
         return LocationInfoResponse.LocationInfoMainPageResponse.builder()
-                .address(locationInfo.getAddress())
+                .addressName(addressName)
                 .sequence(locationInfo.getSequence())
                 .build();
     }
