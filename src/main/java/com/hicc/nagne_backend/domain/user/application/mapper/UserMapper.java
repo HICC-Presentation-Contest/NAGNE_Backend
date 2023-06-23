@@ -13,6 +13,7 @@ public class UserMapper {
         return UserResponse.UserInfoResponse.builder()
                 .name(user.getName())
                 .description(user.getDescription())
+                .profileImageUrl(user.getProfileUrl())
                 .followerCount(followerCount)
                 .followingCount(followingCount)
                 .build();
