@@ -72,8 +72,9 @@ public class TripGetUseCase {
     }
 
 
-    public SliceResponse<TripResponse.TripMainPageResponse> getMainPageTrip(String latitude, String longitude, Pageable pageable) {
-        String address = kakaoLatitudeLongitudeConvertAddressService.convertLatitudeLongitudeToAddress(latitude, longitude);
+    public SliceResponse<TripResponse.TripMainPageResponse> getMainPageTrip(String longitude, String latitude, Pageable pageable) {
+        String address = kakaoLatitudeLongitudeConvertAddressService.convertLatitudeLongitudeToAddress(longitude, latitude);
+        System.out.println(address);
         Slice<Trip> tripList = tripQueryService.findMainPageTripList(address, pageable);
 
         Slice<TripResponse.TripMainPageResponse> tripSearchResponseList =

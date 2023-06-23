@@ -32,11 +32,13 @@ public class KakaoLatitudeLongitudeConvertAddressServiceImpl implements Latitude
     private final RestTemplate restTemplate;
 
     @Override
-    public String convertLatitudeLongitudeToAddress(String latitude, String longitude) {
+    public String convertLatitudeLongitudeToAddress(String longitude, String latitude) {
         final HttpEntity<String> entity = getKakaoMapApiRequestHttpEntity();
-        final String encode = getEncode(latitude, longitude);
-        final String url = getKakaoMapApiUrl(encode);
+        final String encodeLongitude = getEncode(longitude);
+        final String encodeLatitude = getEncode(latitude);
+        final String url = getKakaoMapApiUrl(encodeLongitude, encodeLatitude);
         final URI uri = getUri(url);
+        System.out.println(uri);
         final ResponseEntity<String> simpleResponse = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
         final JSONArray documents = getJsonArray(simpleResponse);
         final KakaoMapResponse kakaoMapResponse = parseKakaoMapResponse(documents);
@@ -51,7 +53,7 @@ public class KakaoLatitudeLongitudeConvertAddressServiceImpl implements Latitude
         } else {
             JSONObject jsonObject = (JSONObject) documents.get(0);
             String addressName = (String) jsonObject.get("region_2depth_name");
-            kakaoMapResponse = new KakaoMapResponse("addressName");
+            kakaoMapResponse = new KakaoMapResponse(addressName);
         }
         return kakaoMapResponse;
     }
@@ -88,14 +90,15 @@ public class KakaoLatitudeLongitudeConvertAddressServiceImpl implements Latitude
         return uri;
     }
 
-    private String getKakaoMapApiUrl(String encode) {
-        return "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?" + encode + "&size=1";
+    private String getKakaoMapApiUrl(String encodeLongitude, String encodeLatitude) {
+        return "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x="
+                + encodeLongitude +"&y=" + encodeLatitude+ "&size=1";
     }
 
-    private static String getEncode(String latitude, String longitude) {
+    private static String getEncode(String s) {
         String encode;
         try {
-            encode = URLEncoder.encode("x=" + longitude + "&y=" + latitude, "UTF-8");
+            encode = URLEncoder.encode(s, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new BusinessException(Error.KAKAO_MAP_ERROR);
         }
