@@ -26,8 +26,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Slf4j
 @UseCase
 @Transactional
@@ -41,7 +39,7 @@ public class GoogleOAuthService {
     private final UserSaveService userSaveService;
     private final JwtProvider jwtProvider;
 
-    public JwtTokenResponse login(HttpServletRequest request, String code){
+    public JwtTokenResponse login(String code){
         final OAuthAccessToken oAuthAccessToken;
         final OAuthUserProfile googleUserProfile;
         try {
@@ -53,7 +51,7 @@ public class GoogleOAuthService {
         }
 
         if(!userQueryService.existsByEmail(googleUserProfile.getEmail())) {
-            User user = UserMapper.mapToUser(googleUserProfile.getName(), googleUserProfile.getEmail(), googleUserProfile.getProfileImage());
+            User user = UserMapper.mapToUser(googleUserProfile.getName(), googleUserProfile.getEmail(), googleUserProfile.getPicture());
             userSaveService.save(user);
         }
 
