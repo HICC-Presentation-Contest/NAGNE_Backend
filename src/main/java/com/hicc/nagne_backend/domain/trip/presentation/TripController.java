@@ -40,8 +40,9 @@ public class TripController {
 	})
 	@Parameter(name = "address", description = "주소", in = QUERY)
 	@GetMapping("/trip")
-	public SliceResponse<TripResponse.TripMainPageResponse> getMainPageTrip(@RequestParam String address, Pageable pageable){
-		return tripGetUseCase.getMainPageTrip(address, pageable);
+	public SliceResponse<TripResponse.TripMainPageResponse> getMainPageTrip(@RequestParam String latitude,
+																			@RequestParam String longitude, Pageable pageable){
+		return tripGetUseCase.getMainPageTrip(latitude, longitude, pageable);
 	}
 
 	/**

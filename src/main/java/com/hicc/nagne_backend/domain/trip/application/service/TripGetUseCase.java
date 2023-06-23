@@ -72,7 +72,8 @@ public class TripGetUseCase {
     }
 
 
-    public SliceResponse<TripResponse.TripMainPageResponse> getMainPageTrip(String address, Pageable pageable) {
+    public SliceResponse<TripResponse.TripMainPageResponse> getMainPageTrip(String latitude, String longitude, Pageable pageable) {
+        String address = kakaoLatitudeLongitudeConvertAddressService.convertLatitudeLongitudeToAddress(latitude, longitude);
         Slice<Trip> tripList = tripQueryService.findMainPageTripList(address, pageable);
 
         Slice<TripResponse.TripMainPageResponse> tripSearchResponseList =
@@ -81,11 +82,8 @@ public class TripGetUseCase {
                     Long tripId = trip.getId();
                     List<LocationInfo> locationInfoListByTripId = locationInfoQueryService.findByTripId(tripId);
                     List<LocationInfoResponse.LocationInfoMainPageResponse> LocationInfoMainPageResponseList =
-                            locationInfoListByTripId.stream().map(locationInfo -> {
-                                String latitude = locationInfo.getAddress().getLatitude();
-                                String longitude = locationInfo.getAddress().getLongitude();
-                                String addressName = kakaoLatitudeLongitudeConvertAddressService.convertLatitudeLongitudeToAddress(latitude, longitude);
-                                return LocationInfoMapper.mapToLocationInfoMainPageResponse(locationInfo, addressName);
+                            locationInfoListByTripId.stream().map(locationInfo -> {;
+                                return LocationInfoMapper.mapToLocationInfoMainPageResponse(locationInfo);
                             }).collect(Collectors.toList());
                     return TripMapper.mapToTripMainPageResponse(trip, LocationInfoMainPageResponseList);
                 });
