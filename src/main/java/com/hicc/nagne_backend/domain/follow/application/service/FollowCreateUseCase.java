@@ -1,7 +1,7 @@
 package com.hicc.nagne_backend.domain.follow.application.service;
 
 import com.hicc.nagne_backend.common.annotation.UseCase;
-import com.hicc.nagne_backend.domain.follow.application.dto.request.FollowRequest;
+import com.hicc.nagne_backend.common.util.UserUtils;
 import com.hicc.nagne_backend.domain.follow.domain.service.FollowSaveService;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import com.hicc.nagne_backend.domain.user.domain.service.UserQueryService;
@@ -14,11 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class FollowCreateUseCase {
 
     private final UserQueryService userQueryService;
+    private final UserUtils userUtils;
     private final FollowSaveService followSaveService;
     
-    public void createFollow(FollowRequest.FollowCreateRequest followRequest) {
-        User sender = userQueryService.findById(followRequest.getSenderId());
-        User receiver = userQueryService.findById(followRequest.getReceiverId());
-        followSaveService.save(sender, receiver);
+    public void createFollow(Long followId){
+        User user = userUtils.getUser();
+        User receiver = userQueryService.findById(followId);
+        followSaveService.save(user, receiver);
     }
 }
