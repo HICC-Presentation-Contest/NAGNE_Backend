@@ -74,7 +74,6 @@ public class TripGetUseCase {
 
     public SliceResponse<TripResponse.TripMainPageResponse> getMainPageTrip(String longitude, String latitude, Pageable pageable) {
         String address = kakaoLatitudeLongitudeConvertAddressService.convertLatitudeLongitudeToAddress(longitude, latitude);
-        System.out.println(address);
         Slice<Trip> tripList = tripQueryService.findMainPageTripList(address, pageable);
 
         Slice<TripResponse.TripMainPageResponse> tripSearchResponseList =
@@ -89,6 +88,24 @@ public class TripGetUseCase {
                     return TripMapper.mapToTripMainPageResponse(trip, LocationInfoMainPageResponseList);
                 });
 
+        return SliceResponse.of(tripSearchResponseList);
+    }
+
+    public SliceResponse<TripResponse.TripMainPageResponse> getMainPageTripByPopularity(String longitude, String latitude, Pageable pageable) {
+        String address = kakaoLatitudeLongitudeConvertAddressService.convertLatitudeLongitudeToAddress(longitude, latitude);
+        Slice<Trip> tripList = tripQueryService.findMainPageTripListByPopularity(address, pageable);
+
+        Slice<TripResponse.TripMainPageResponse> tripSearchResponseList =
+                tripList.map(trip ->
+                {
+                    Long tripId = trip.getId();
+                    List<LocationInfo> locationInfoListByTripId = locationInfoQueryService.findByTripId(tripId);
+                    List<LocationInfoResponse.LocationInfoMainPageResponse> LocationInfoMainPageResponseList =
+                            locationInfoListByTripId.stream().map(locationInfo -> {;
+                                return LocationInfoMapper.mapToLocationInfoMainPageResponse(locationInfo);
+                            }).collect(Collectors.toList());
+                    return TripMapper.mapToTripMainPageResponse(trip, LocationInfoMainPageResponseList);
+                });
         return SliceResponse.of(tripSearchResponseList);
     }
 
@@ -112,4 +129,6 @@ public class TripGetUseCase {
                 });
         return tripSearchResponseList;
     }
+
+
 }

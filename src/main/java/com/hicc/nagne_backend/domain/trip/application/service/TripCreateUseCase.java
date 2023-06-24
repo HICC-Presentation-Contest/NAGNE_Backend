@@ -4,7 +4,6 @@ import com.hicc.nagne_backend.common.annotation.UseCase;
 import com.hicc.nagne_backend.common.util.UserUtils;
 import com.hicc.nagne_backend.domain.locationimage.application.mapper.LocationImageMapper;
 import com.hicc.nagne_backend.domain.locationimage.domain.service.LocationImageSaveService;
-import com.hicc.nagne_backend.domain.locationinfo.application.dto.request.LocationInfoRequest;
 import com.hicc.nagne_backend.domain.locationinfo.application.mapper.LocationInfoMapper;
 import com.hicc.nagne_backend.domain.locationinfo.domain.entity.Address;
 import com.hicc.nagne_backend.domain.locationinfo.domain.entity.LocationInfo;
@@ -20,8 +19,6 @@ import com.hicc.nagne_backend.domain.trip.domain.service.TripSaveService;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
 
 @UseCase
 @RequiredArgsConstructor
