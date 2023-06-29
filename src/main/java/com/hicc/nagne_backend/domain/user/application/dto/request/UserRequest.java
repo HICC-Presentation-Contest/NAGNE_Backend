@@ -1,5 +1,6 @@
 package com.hicc.nagne_backend.domain.user.application.dto.request;
 
+import com.hicc.nagne_backend.domain.user.domain.entity.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,6 +43,21 @@ public class UserRequest {
         public UserSignUpRequest(String name, String email) {
             this.name = name;
             this.email = email;
+        }
+    }
+
+    @Getter
+    @NoArgsConstructor
+    public static class UserCreateRequest{
+        @Schema(description = "유저 거주지역", defaultValue = "homeAddress")
+        private String homeAddress;
+        @Schema(description = "유저 성별", defaultValue = "gender")
+        private Gender gender;
+
+        @Builder
+        public UserCreateRequest(String homeAddress, Gender gender) {
+            this.homeAddress = homeAddress;
+            this.gender = gender;
         }
     }
 }
