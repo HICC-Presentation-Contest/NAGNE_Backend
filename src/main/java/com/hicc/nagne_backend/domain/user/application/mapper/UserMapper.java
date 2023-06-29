@@ -34,4 +34,10 @@ public class UserMapper {
                 .build();
     }
 
+    public static UserResponse.UserBasicResponse mapToUserBasicResponse(User user) {
+        return UserResponse.UserBasicResponse.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .build();
+    }
 }

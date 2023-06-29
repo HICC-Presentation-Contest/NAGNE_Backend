@@ -7,6 +7,21 @@ import lombok.Getter;
 public class UserResponse {
 
     @Getter
+    public static class UserBasicResponse {
+
+        @Schema(description = "유저 이름", defaultValue = "name")
+        private String name;
+        @Schema(description = "유저 이메일", defaultValue = "email")
+        private String email;
+
+        @Builder
+        public UserBasicResponse(String name, String email) {
+            this.name = name;
+            this.email = email;
+        }
+    }
+
+    @Getter
     public static class UserInfoResponse {
 
         @Schema(description = "유저 이름", defaultValue = "name")

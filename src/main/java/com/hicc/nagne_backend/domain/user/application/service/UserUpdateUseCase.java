@@ -3,6 +3,7 @@ package com.hicc.nagne_backend.domain.user.application.service;
 import com.hicc.nagne_backend.common.annotation.UseCase;
 import com.hicc.nagne_backend.common.util.UserUtils;
 import com.hicc.nagne_backend.domain.user.application.dto.request.UserRequest;
+import com.hicc.nagne_backend.domain.user.domain.entity.Gender;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import com.hicc.nagne_backend.domain.user.domain.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,17 @@ public class UserUpdateUseCase {
         String description = userUpdateRequest.getDescription();
         String profileUrl = userUpdateRequest.getProfileUrl();
 
-        user.updateUserInfo(name, description, email, profileUrl);
+        user.updateUserPage(name, description, email, profileUrl);
+
+    }
+
+    public void updateUserInfo(final UserRequest.UserCreateRequest userCreateRequest) {
+        final User user = userUtils.getUser();
+
+        String homeAddress = userCreateRequest.getHomeAddress();
+        Gender gender = userCreateRequest.getGender();
+
+        user.updateUserInfo(homeAddress, gender);
 
     }
 }
