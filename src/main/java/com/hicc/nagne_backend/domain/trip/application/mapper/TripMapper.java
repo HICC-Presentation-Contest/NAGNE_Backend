@@ -29,7 +29,7 @@ public class TripMapper {
 				.address(trip.getAddress())
 				.title(trip.getTitle())
 				.tripId(trip.getId())
-				.createdDate(trip.getCreatedDate())
+				.createdDate(trip.getCreatedDate().toLocalDate())
 				.locationInfoList(locationInfoUserResponseList)
 				.build();
 	}

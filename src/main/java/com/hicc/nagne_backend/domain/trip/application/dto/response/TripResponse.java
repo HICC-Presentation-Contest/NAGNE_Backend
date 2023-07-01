@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public class TripResponse {
@@ -70,12 +70,12 @@ public class TripResponse {
 		@Schema(description = "제목", defaultValue = "title")
 		private String title;
 		@Schema(description = "생성 날짜", defaultValue = "createdDate")
-		private LocalDateTime createdDate;
+		private LocalDate createdDate;
 		@Schema(description = "여행 장소 리스트", defaultValue = "locationInfoList")
 		private List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoList;
 
 		@Builder
-		public TripSimpleResponse(Long tripId, String address, String title, LocalDateTime createdDate, List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoList) {
+		public TripSimpleResponse(Long tripId, String address, String title, LocalDate createdDate, List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoList) {
 			this.tripId = tripId;
 			this.address = address;
 			this.title = title;
