@@ -85,8 +85,7 @@ public class TripController {
 	@PostMapping(value = "/trip", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void createTrip(
 			@Parameter(
-					description = "여행 생성 요청",
-					content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)
+					description = "여행 생성 요청", schema = @Schema(implementation = TripRequest.TripCreateRequest.class)
 			)
 			@ModelAttribute TripRequest.TripCreateRequest tripCreateRequest) {
 		tripCreateUseCase.createTrip(tripCreateRequest);

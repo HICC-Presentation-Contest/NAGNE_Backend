@@ -29,15 +29,18 @@ public class LocationInfoRequest {
         @Schema(description = "이미지 리스트", defaultValue = "locationImage")
         @Nullable
         private MultipartFile locationImage;
+        @Schema(description = "이미지 리스트", defaultValue = "base64Image")
+        private String image;
 
         @Builder
-        public LocationInfoCreate(String address,String longitude, String latitude, String description, String sequence, MultipartFile locationImage) {
+        public LocationInfoCreate(String address,String longitude, String latitude, String description, String sequence, MultipartFile locationImage, String image) {
             this.address = address;
             this.longitude = longitude;
             this.latitude = latitude;
             this.description = description;
             this.sequence = sequence;
             this.locationImage = locationImage;
+            this.image = image;
         }
     }
 }
