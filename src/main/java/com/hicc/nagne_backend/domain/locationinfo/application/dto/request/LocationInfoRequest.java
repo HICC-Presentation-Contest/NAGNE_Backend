@@ -16,6 +16,8 @@ public class LocationInfoRequest {
     @NoArgsConstructor
     public static class LocationInfoCreate {
 
+        @Schema(description = "장소 이름", defaultValue = "address")
+        private String address;
         @Schema(description = "경도", defaultValue = "longitude")
         private String longitude;
         @Schema(description = "위도", defaultValue = "latitude")
@@ -29,7 +31,8 @@ public class LocationInfoRequest {
         private MultipartFile locationImage;
 
         @Builder
-        public LocationInfoCreate(String longitude, String latitude, String description, String sequence, MultipartFile locationImage) {
+        public LocationInfoCreate(String address,String longitude, String latitude, String description, String sequence, MultipartFile locationImage) {
+            this.address = address;
             this.longitude = longitude;
             this.latitude = latitude;
             this.description = description;

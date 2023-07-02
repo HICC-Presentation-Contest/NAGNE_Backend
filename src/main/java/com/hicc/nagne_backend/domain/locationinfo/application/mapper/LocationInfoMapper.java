@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class LocationInfoMapper
 {
     public static LocationInfo mapToLocationInfo(Trip trip, LocationInfoRequest.LocationInfoCreate locationInfoCreate) {
-        Address address = new Address(null, locationInfoCreate.getLongitude(), locationInfoCreate.getLatitude());
+        Address address = new Address(locationInfoCreate.getAddress(), locationInfoCreate.getLongitude(), locationInfoCreate.getLatitude());
         log.info("address: {}", address);
         return LocationInfo.builder()
                 .trip(trip)
