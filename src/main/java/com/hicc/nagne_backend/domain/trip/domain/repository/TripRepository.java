@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TripRepository extends JpaRepository<Trip, Long>, TripRepositoryCustom {
 
-    Slice<Trip> findByUserId(Long userId, Pageable pageable);
+    Slice<Trip> findByUserIdOrderByCreatedDateDesc(Long userId, Pageable pageable);
 
     Long countByUserId(Long userId);
 

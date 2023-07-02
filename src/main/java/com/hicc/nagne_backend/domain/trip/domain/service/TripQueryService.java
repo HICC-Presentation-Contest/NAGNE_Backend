@@ -22,7 +22,7 @@ public class TripQueryService {
 	}
 
 	public Slice<Trip> findByUserId(Long userId, Pageable pageable){
-		Slice<Trip> tripList = tripRepository.findByUserId(userId, pageable);
+		Slice<Trip> tripList = tripRepository.findByUserIdOrderByCreatedDateDesc(userId, pageable);
 		return tripList;
 	}
 
