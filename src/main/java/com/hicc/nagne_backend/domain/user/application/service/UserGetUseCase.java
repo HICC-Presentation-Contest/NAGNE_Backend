@@ -11,6 +11,8 @@ import com.hicc.nagne_backend.domain.user.domain.service.UserQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @UseCase
 @RequiredArgsConstructor
 @Transactional
@@ -22,29 +24,22 @@ public class UserGetUseCase {
     private final UserQueryService userQueryService;
 
     public UserResponse.UserBasicResponse getBasicUserInfo() {
-        User user = userUtils.getUser();
+        final User user = userUtils.getUser();
         return UserMapper.mapToUserBasicResponse(user);
     }
 
-    public UserResponse.UserInfoResponse getUser(Long userId) {
-
-        if(userId != null){
-            User user = userQueryService.findById(userId);
-            return getUserFollowResponse(userId, user);
+    public UserResponse.UserInfoResponse getUser(final Long userId) {
+        if(Objects.nonNull(userId)){
+            final User user = userQueryService.findById(userId);
+            return getUserFollowResponse(user);
         }
-
-        User user = userUtils.getUser();
-        Long findUserId = user.getId();
-        return getUserFollowResponse(findUserId, user);
+        final User user = userUtils.getUser();
+        return getUserFollowResponse(user);
     }
 
-    private UserResponse.UserInfoResponse getUserFollowResponse(Long userId, User user) {
-        Long followerCount = followerQueryService.countByReceiverId(userId);
-        Long followingCount = followingQueryService.countBySenderId(userId);
-
-        UserResponse.UserInfoResponse userInfoResponse =
-                UserMapper.mapToUserInfoResponse(user, followerCount, followingCount);
-
-        return userInfoResponse;
+    private UserResponse.UserInfoResponse getUserFollowResponse(final User user) {
+        final Long followerCount = followerQueryService.countByReceiverId(user.getId());
+        final Long followingCount = followingQueryService.countBySenderId(user.getId());
+        return UserMapper.mapToUserInfoResponse(user, followerCount, followingCount);
     }
 }
