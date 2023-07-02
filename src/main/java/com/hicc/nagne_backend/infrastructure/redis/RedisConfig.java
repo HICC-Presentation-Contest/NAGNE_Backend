@@ -1,4 +1,4 @@
-package com.hicc.nagne_backend.common.config;
+package com.hicc.nagne_backend.infrastructure.redis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
