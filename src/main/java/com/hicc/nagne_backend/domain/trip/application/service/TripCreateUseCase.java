@@ -46,7 +46,8 @@ public class TripCreateUseCase {
         tripCreateRequest.getLocationInfo().forEach(locationInfoCreateRequest -> {
             LocationInfo locationInfo = LocationInfoMapper.mapToLocationInfo(trip, locationInfoCreateRequest);
             locationInfoSaveService.save(locationInfo);
-            String imgUrl = s3UploadService.upload(locationInfoCreateRequest.getLocationImage());
+//            String imgUrl = s3UploadService.upload(locationInfoCreateRequest.getLocationImage());
+            String imgUrl = locationInfoCreateRequest.getImage();
             locationImageSaveService.saveImage(LocationImageMapper.mapToLocationImage(imgUrl, locationInfo));
         });
     }
