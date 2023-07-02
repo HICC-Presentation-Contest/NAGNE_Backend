@@ -34,10 +34,11 @@ public class TripMapper {
 				.build();
 	}
 
-	public static Trip mapToTrip(TripRequest.TripCreateRequest tripCreateRequest, User user) {
+	public static Trip mapToTrip(TripRequest.TripCreateRequest tripCreateRequest, String tripImageUrl,User user) {
 		return Trip.builder()
 				.address(tripCreateRequest.getAddress())
 				.title(tripCreateRequest.getTitle())
+				.tripImageUrl(tripImageUrl)
 				.user(user)
 				.build();
 	}
