@@ -7,11 +7,15 @@ import com.hicc.nagne_backend.domain.locationinfo.domain.entity.LocationInfo;
 import com.hicc.nagne_backend.domain.trip.domain.entity.Trip;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LocationInfoMapper
 {
-    public static LocationInfo mapToLocationInfo(Trip trip, LocationInfoRequest.LocationInfoCreate locationInfoCreate, Address address) {
+    public static LocationInfo mapToLocationInfo(Trip trip, LocationInfoRequest.LocationInfoCreate locationInfoCreate) {
+        Address address = new Address(null, locationInfoCreate.getLongitude(), locationInfoCreate.getLatitude());
+        log.info("address: {}", address);
         return LocationInfo.builder()
                 .trip(trip)
                 .address(address)
