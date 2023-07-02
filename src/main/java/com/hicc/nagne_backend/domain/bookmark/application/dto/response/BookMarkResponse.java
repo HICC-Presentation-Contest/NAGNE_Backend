@@ -3,10 +3,12 @@ package com.hicc.nagne_backend.domain.bookmark.application.dto.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class BookMarkResponse { //내가 저장한 bookMark
 
     @Getter
+    @NoArgsConstructor
     public static class BookMarkInfoResponse{
         @Schema(description = "여정 id", defaultValue = "tripId")
         private Long tripId;
@@ -24,6 +26,7 @@ public class BookMarkResponse { //내가 저장한 bookMark
     }
 
     @Getter
+    @NoArgsConstructor
     public static class BookMarkCountResponse{
         @Schema(description = "북마크 수", defaultValue = "bookMarkCount")
         private Long bookMarkCount;
