@@ -48,6 +48,11 @@ public class BookMarkController {
         bookMarkCreateUseCase.createBookMark(tripId);
     }
 
+    /**
+     * 캐시 적용전 : 3회 warmup, 5회 측정 결과 평균 74.8
+     * 캐시 적용후 : 3회 warmup, 5회 측정 결과 평균 23.8
+     * 캐시 적용으로 성능 향상 74.8 -> 23.8 (3.14배)
+     */
     @Operation(summary = "북마크 총 갯수 조회", tags = {"BookMarkController"})
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "북마크 총 갯수 조회 성공"),
