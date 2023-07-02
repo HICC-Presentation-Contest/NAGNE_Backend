@@ -31,8 +31,8 @@ public class BookMarkController {
             @ApiResponse(responseCode = "404", description = "북마크 조회 실패",
             content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @GetMapping("/bookmark/{userId}")
-    public SliceResponse<BookMarkResponse.BookMarkInfoResponse> getBookMark(@PathVariable Long userId, Pageable pageable){
+    @GetMapping("/bookmark")
+    public SliceResponse<BookMarkResponse.BookMarkInfoResponse> getBookMark(@RequestParam Long userId, Pageable pageable){
         return bookMarkGetUseCase.getBookMark(userId, pageable);
     }
 
