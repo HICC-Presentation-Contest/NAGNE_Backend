@@ -55,9 +55,4 @@ public class TripQueryService {
 		Slice<Trip> tripList = tripRepository.findMainPageTripListByPopularity(address, pageable);
 		return tripList;
 	}
-
-//	public Long countByTag(String tagName){
-//		Long count = tripRepository.countByTag(tagName);
-//		return count;
-//	}
 }

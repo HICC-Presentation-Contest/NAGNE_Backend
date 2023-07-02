@@ -33,20 +33,16 @@ public class TripCreateUseCase {
     private final LocationImageSaveService locationImageSaveService;
 
     @Transactional
-    public void createTrip(TripRequest.TripCreateRequest tripCreateRequest) {
-        log.info("여정 생성 요청: {}", tripCreateRequest);
-        User user = userUtils.getUser();
-        String tripImageUrl = s3UploadService.upload(tripCreateRequest.getTripImage());
-        Trip trip = TripMapper.mapToTrip(tripCreateRequest, tripImageUrl,user);
+    public void createTrip(final TripRequest.TripCreateRequest tripCreateRequest) {
+        final User user = userUtils.getUser();
+        final String tripImageUrl = s3UploadService.upload(tripCreateRequest.getTripImage());
+        final Trip trip = TripMapper.mapToTrip(tripCreateRequest, tripImageUrl,user);
         tripSaveService.save(trip);
-
-        tripCreateRequest.getTag().forEach(tagCreate ->
-                tagSaveService.save(TagMapper.mapToTag(trip, tagCreate)));
-
+        tripCreateRequest.getTag().forEach(tagCreate -> tagSaveService.save(TagMapper.mapToTag(trip, tagCreate)));
         tripCreateRequest.getLocationInfo().forEach(locationInfoCreateRequest -> {
-            LocationInfo locationInfo = LocationInfoMapper.mapToLocationInfo(trip, locationInfoCreateRequest);
+            final LocationInfo locationInfo = LocationInfoMapper.mapToLocationInfo(trip, locationInfoCreateRequest);
             locationInfoSaveService.save(locationInfo);
-            String imgUrl = s3UploadService.upload(locationInfoCreateRequest.getLocationImage());
+            final String imgUrl = s3UploadService.upload(locationInfoCreateRequest.getLocationImage());
             locationImageSaveService.saveImage(LocationImageMapper.mapToLocationImage(imgUrl, locationInfo));
         });
     }

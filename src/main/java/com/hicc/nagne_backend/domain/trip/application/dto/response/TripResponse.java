@@ -19,16 +19,16 @@ public class TripResponse {
 		private String address;
 		@Schema(description = "제목", defaultValue = "title")
 		private String title;
-		@Schema(description = "여행 장소 리스트", defaultValue = "locationInfoList")
-		private List<LocationInfoResponse.LocationInfoMainPageResponse> locationInfoList;
+		@Schema(description = "여정 지도 이미지", defaultValue = "tripImageUrl")
+		private String tripImageUrl;
 
 		@Builder
 		public TripMainPageResponse(Long tripId, String address, String title,
-									List<LocationInfoResponse.LocationInfoMainPageResponse> locationInfoList) {
+									String tripImageUrl) {
 			this.tripId = tripId;
 			this.address = address;
 			this.title = title;
-			this.locationInfoList = locationInfoList;
+			this.tripImageUrl = tripImageUrl;
 		}
 	}
 
@@ -62,7 +62,7 @@ public class TripResponse {
 
 	//마이페이지
 	@Getter
-	public static class TripSimpleResponse {
+	public static class TripUserSimpleResponse {
 		@Schema(description = "여행 식별자", defaultValue = "tripId")
 		private Long tripId;
 		@Schema(description = "주소", defaultValue = "address")
@@ -75,7 +75,7 @@ public class TripResponse {
 		private List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoList;
 
 		@Builder
-		public TripSimpleResponse(Long tripId, String address, String title, LocalDate createdDate, List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoList) {
+		public TripUserSimpleResponse(Long tripId, String address, String title, LocalDate createdDate, List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoList) {
 			this.tripId = tripId;
 			this.address = address;
 			this.title = title;
@@ -93,15 +93,39 @@ public class TripResponse {
 		private String address;
 		@Schema(description = "제목", defaultValue = "title")
 		private String title;
-		@Schema(description = "여행 장소 리스트", defaultValue = "locationInfoList")
-		private List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoList;
+		@Schema(description = "여정 지도 이미지", defaultValue = "tripImageUrl")
+		private String tripImageUrl;
 
 		@Builder
-		public TripSearchResponse(Long tripId, String address, String title, List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoList, Long searchCount) {
+		public TripSearchResponse(Long tripId, String address, String title, String tripImageUrl) {
 			this.tripId = tripId;
 			this.address = address;
 			this.title = title;
-			this.locationInfoList = locationInfoList;
+			this.tripImageUrl = tripImageUrl;
+		}
+	}
+
+	public static class TripCountResponse{
+		@Schema(description = "여행 수", defaultValue = "count")
+		private Long count;
+
+		@Builder
+		public TripCountResponse(Long count) {
+			this.count = count;
+		}
+	}
+
+	@Getter
+	public static class TripUserResponse{
+		private Long tripId;
+		private String tripImageUrl;
+		private boolean bookmark;
+
+		@Builder
+		public TripUserResponse(Long tripId, String tripImageUrl, boolean bookmark) {
+			this.tripId = tripId;
+			this.tripImageUrl = tripImageUrl;
+			this.bookmark = bookmark;
 		}
 	}
 }
