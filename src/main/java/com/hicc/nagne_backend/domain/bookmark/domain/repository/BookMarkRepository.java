@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BookMarkRepository extends JpaRepository<BookMark, Long> {
 
-    Slice<BookMark> findByUserId(Long userId, Pageable pageable);
+    Slice<BookMark> findByUserIdOrderByCreatedDateDesc(Long userId, Pageable pageable);
 
     boolean existsByUserIdAndTripId(Long userId, Long tripId);
 

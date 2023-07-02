@@ -16,8 +16,7 @@ public class BookMarkQueryService {
     private final BookMarkRepository bookMarkRepository;
 
     public Slice<BookMark> findByUserId(Long userId,  Pageable pageable){
-        Slice<BookMark> bookMarkList = bookMarkRepository.findByUserId(userId, pageable);
-        return bookMarkList;
+        return bookMarkRepository.findByUserIdOrderByCreatedDateDesc(userId, pageable);
     }
 
     public boolean existsByUserIdAndTripId(Long userId, Long tripId){

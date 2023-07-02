@@ -3,20 +3,13 @@ package com.hicc.nagne_backend.domain.bookmark.application.service;
 import com.hicc.nagne_backend.common.annotation.UseCase;
 import com.hicc.nagne_backend.common.slice.SliceResponse;
 import com.hicc.nagne_backend.domain.bookmark.application.dto.response.BookMarkResponse;
-import com.hicc.nagne_backend.domain.bookmark.application.mapper.BookMarkMapper;
 import com.hicc.nagne_backend.domain.bookmark.domain.entity.BookMark;
 import com.hicc.nagne_backend.domain.bookmark.domain.service.BookMarkQueryService;
-import com.hicc.nagne_backend.domain.locationinfo.application.dto.response.LocationInfoResponse;
-import com.hicc.nagne_backend.domain.locationinfo.application.mapper.LocationInfoMapper;
-import com.hicc.nagne_backend.domain.locationinfo.domain.entity.LocationInfo;
-import com.hicc.nagne_backend.domain.locationinfo.domain.service.LocationInfoQueryService;
+import com.hicc.nagne_backend.domain.trip.domain.entity.Trip;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @UseCase
 @RequiredArgsConstructor
@@ -24,24 +17,19 @@ import java.util.stream.Collectors;
 public class BookMarkGetUseCase {
 
     private final BookMarkQueryService bookMarkQueryService;
-    private final LocationInfoQueryService locationInfoQueryService;
 
-    public SliceResponse<BookMarkResponse.BookMarkInfoResponse> getBookMark(Long userId, Pageable pageable){
-        Slice<BookMark> bookMarkList = bookMarkQueryService.findByUserId(userId, pageable);
-
-        Slice<BookMarkResponse.BookMarkInfoResponse> bookMarkResponseList
-                = bookMarkList.map(bookMark -> {
-                    Long tripId = bookMark.getTrip().getId();
-                    List<LocationInfo> locationInfoList = locationInfoQueryService.findByTripId(tripId);
-
-                    List<LocationInfoResponse.LocationInfoBookMarkResponse> locationInfoBookMarkResponseList
-                            = locationInfoList.stream().map(locationInfo -> {
-                                return LocationInfoMapper.mapToLocationInfoBookMarkResponse(locationInfo);
-                            }).collect(Collectors.toList());
-
-                    return BookMarkMapper.mapToBookMarkInfoResponse(bookMark, locationInfoBookMarkResponseList);
-                });
-
+    public SliceResponse<BookMarkResponse.BookMarkInfoResponse> getBookMark(final Long userId, Pageable pageable) {
+        final Slice<BookMark> bookMarkList = bookMarkQueryService.findByUserId(userId, pageable);
+        final Slice<BookMarkResponse.BookMarkInfoResponse> bookMarkResponseList = bookMarkList.map(bookMark -> {
+            final Trip trip = bookMark.getTrip();
+            final Long tripId = trip.getId();
+            final String tripImageUrl = trip.getTripImageUrl();
+            return BookMarkResponse.BookMarkInfoResponse.builder()
+                    .tripId(tripId)
+                    .tripImageUrl(tripImageUrl)
+                    .isBookMark(true)
+                    .build();
+        });
         return SliceResponse.of(bookMarkResponseList);
     }
 }
