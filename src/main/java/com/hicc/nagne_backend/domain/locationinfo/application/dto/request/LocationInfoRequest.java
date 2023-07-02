@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 
 public class LocationInfoRequest {
@@ -15,6 +16,8 @@ public class LocationInfoRequest {
     @NoArgsConstructor
     public static class LocationInfoCreate {
 
+        @Schema(description = "장소 이름", defaultValue = "address")
+        private String address;
         @Schema(description = "경도", defaultValue = "longitude")
         private String longitude;
         @Schema(description = "위도", defaultValue = "latitude")
@@ -24,10 +27,12 @@ public class LocationInfoRequest {
         @Schema(description = "순서", defaultValue = "sequence")
         private String sequence;
         @Schema(description = "이미지 리스트", defaultValue = "locationImage")
+        @Nullable
         private MultipartFile locationImage;
 
         @Builder
-        public LocationInfoCreate(String longitude, String latitude, String description, String sequence, MultipartFile locationImage) {
+        public LocationInfoCreate(String address,String longitude, String latitude, String description, String sequence, MultipartFile locationImage) {
+            this.address = address;
             this.longitude = longitude;
             this.latitude = latitude;
             this.description = description;
