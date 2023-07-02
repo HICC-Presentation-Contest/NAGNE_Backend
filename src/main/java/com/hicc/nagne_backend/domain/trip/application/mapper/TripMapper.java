@@ -13,24 +13,31 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TripMapper {
 
-	public static TripResponse.TripInfoResponse mapToTripInfoResponse(Trip trip, List<LocationInfoResponse.LocationInfoDetailsResponse> locationInfoDetailsResponseList, boolean bookMark) {
+	public static TripResponse.TripInfoResponse mapToTripInfoResponse(Trip trip, List<LocationInfoResponse.LocationInfoDetailsResponse> locationInfoDetailsResponseList) {
 		return TripResponse.TripInfoResponse.builder()
 				.userId(trip.getUser().getId())
 				.username(trip.getUser().getName())
 				.address(trip.getAddress())
 				.title(trip.getTitle())
 				.locationInfo(locationInfoDetailsResponseList)
-				.bookmark(bookMark)
 				.build();
 	}
 
-	public static TripResponse.TripSimpleResponse mapToTripSimpleResponse(Trip trip, List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoUserResponseList) {
-		return TripResponse.TripSimpleResponse.builder()
+	public static TripResponse.TripUserSimpleResponse mapToTripSimpleResponse(Trip trip, List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoUserResponseList) {
+		return TripResponse.TripUserSimpleResponse.builder()
 				.address(trip.getAddress())
 				.title(trip.getTitle())
 				.tripId(trip.getId())
 				.createdDate(trip.getCreatedDate().toLocalDate())
 				.locationInfoList(locationInfoUserResponseList)
+				.build();
+	}
+
+	public static TripResponse.TripUserResponse mapToTripUserResponse(Trip trip, boolean bookMark) {
+		return TripResponse.TripUserResponse.builder()
+				.tripId(trip.getId())
+				.tripImageUrl(trip.getTripImageUrl())
+				.bookmark(bookMark)
 				.build();
 	}
 
@@ -43,21 +50,21 @@ public class TripMapper {
 				.build();
 	}
 
-	public static TripResponse.TripSearchResponse mapToTripSearchResponse(Trip trip, List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoUserResponseList) {
+	public static TripResponse.TripSearchResponse mapToTripSearchResponse(Trip trip) {
 		return TripResponse.TripSearchResponse.builder()
 				.tripId(trip.getId())
 				.address(trip.getAddress())
 				.title(trip.getTitle())
-				.locationInfoList(locationInfoUserResponseList)
+				.tripImageUrl(trip.getTripImageUrl())
 				.build();
 	}
 
-	public static TripResponse.TripMainPageResponse mapToTripMainPageResponse(Trip trip, List<LocationInfoResponse.LocationInfoMainPageResponse> locationInfoMainPageResponseList) {
+	public static TripResponse.TripMainPageResponse mapToTripMainPageResponse(Trip trip) {
 		return TripResponse.TripMainPageResponse.builder()
 				.tripId(trip.getId())
 				.address(trip.getAddress())
 				.title(trip.getTitle())
-				.locationInfoList(locationInfoMainPageResponseList)
+				.tripImageUrl(trip.getTripImageUrl())
 				.build();
 	}
 

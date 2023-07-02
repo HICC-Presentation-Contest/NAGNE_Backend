@@ -35,4 +35,14 @@ public class BookMarkResponse { //내가 저장한 bookMark
             this.bookMarkCount = bookMarkCount;
         }
     }
+
+    @Getter
+    public static class BookMarkCheckResponse{
+        @Schema(description = "북마크 여부", defaultValue = "isBookMark")
+        private boolean isBookMark;
+
+        public BookMarkCheckResponse(boolean isBookMark) {
+            this.isBookMark = isBookMark;
+        }
+    }
 }

@@ -11,6 +11,7 @@ public class UserMapper {
 
     public static UserResponse.UserInfoResponse mapToUserInfoResponse(User user, Long followerCount, Long followingCount) {
         return UserResponse.UserInfoResponse.builder()
+                .userId(user.getId())
                 .name(user.getName())
                 .description(user.getDescription())
                 .profileImageUrl(user.getProfileUrl())

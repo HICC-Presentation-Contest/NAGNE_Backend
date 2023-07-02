@@ -88,7 +88,8 @@ public class TripRepositoryImpl implements TripRepositoryCustom {
                 .select(trip)
                 .from(trip)
                 .where(trip.address.contains(address))
-                .orderBy(trip.bookMarks.size().desc())
+                .orderBy(trip.bookMarks.size().desc(),
+                        trip.createdDate.desc())
                 .fetch();
 
        return getSliceImpl(tripList, pageable);

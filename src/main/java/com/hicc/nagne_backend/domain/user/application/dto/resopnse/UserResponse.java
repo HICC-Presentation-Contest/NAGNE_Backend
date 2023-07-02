@@ -23,7 +23,8 @@ public class UserResponse {
 
     @Getter
     public static class UserInfoResponse {
-
+        @Schema(description = "유저 id", defaultValue = "userId")
+        private Long userId;
         @Schema(description = "유저 이름", defaultValue = "name")
         private String name;
         @Schema(description = "유저 설명", defaultValue = "description")
@@ -36,7 +37,8 @@ public class UserResponse {
         private Long followingCount;
 
         @Builder
-        public UserInfoResponse(String name, String description, String profileImageUrl, Long followerCount, Long followingCount) {
+        public UserInfoResponse(Long userId, String name, String description, String profileImageUrl, Long followerCount, Long followingCount) {
+            this.userId = userId;
             this.name = name;
             this.description = description;
             this.profileImageUrl = profileImageUrl;
