@@ -13,14 +13,13 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TripMapper {
 
-	public static TripResponse.TripInfoResponse mapToTripInfoResponse(Trip trip, List<LocationInfoResponse.LocationInfoDetailsResponse> locationInfoDetailsResponseList, boolean bookMark) {
+	public static TripResponse.TripInfoResponse mapToTripInfoResponse(Trip trip, List<LocationInfoResponse.LocationInfoDetailsResponse> locationInfoDetailsResponseList) {
 		return TripResponse.TripInfoResponse.builder()
 				.userId(trip.getUser().getId())
 				.username(trip.getUser().getName())
 				.address(trip.getAddress())
 				.title(trip.getTitle())
 				.locationInfo(locationInfoDetailsResponseList)
-				.bookmark(bookMark)
 				.build();
 	}
 

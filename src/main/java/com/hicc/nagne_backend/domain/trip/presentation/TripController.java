@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
@@ -84,6 +85,7 @@ public class TripController {
 			@ApiResponse(responseCode = "404", description = "여행 등록 실패",
 					content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	})
+	@CacheEvict(value = {"tripUser", "tripCount"}, allEntries = true)
 	@PostMapping(value = "/trip", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void createTrip(
 			@Parameter(
@@ -112,6 +114,7 @@ public class TripController {
 					content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	})
 	@Parameter(name = "userId", description = "사용자 식별자", in = PATH)
+	@Cacheable(value = "tripUser", key = "#userId")
 	@GetMapping("/trip/user/{userId}")
 	public SliceResponse<TripResponse.TripUserResponse> getTripListByUserId(@PathVariable Long userId, Pageable pageable){
 		return tripUserGetUseCase.getTripListByUserId(userId, pageable);
@@ -124,6 +127,7 @@ public class TripController {
 					content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	})
 	@Parameter(name = "userId", description = "사용자 식별자", in = PATH)
+	@Cacheable(value = "tripCount", key = "#userId")
 	@GetMapping("/trip/user/{userId}/count")
 	public TripResponse.TripCountResponse getTripCount(@PathVariable Long userId) {
 		return tripCountGetUseCase.getTripCount(userId);

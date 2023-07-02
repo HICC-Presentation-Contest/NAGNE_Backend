@@ -2,6 +2,7 @@ package com.hicc.nagne_backend.domain.locationinfo.application.dto.response;
 
 import com.hicc.nagne_backend.domain.locationinfo.domain.entity.Address;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +40,7 @@ public class LocationInfoResponse {
     }
 
     @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class LocationInfoDetailsResponse{
         @Schema(description = "장소 정보", defaultValue = "place")
         private String place;
