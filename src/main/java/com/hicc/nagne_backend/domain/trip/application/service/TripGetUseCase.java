@@ -51,14 +51,14 @@ public class TripGetUseCase {
         Slice<Trip> tripList = tripQueryService.findByUserId(userId, pageable);
 
         Slice<TripResponse.TripSimpleResponse> TripSimpleResponseList =
-                tripList.map(trip ->
-                {
+                tripList.map(trip -> {
                     Long tripId = trip.getId();
                     List<LocationInfo> locationInfoListByTripId = locationInfoQueryService.findByTripId(tripId);
                     List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoUserResponseList =
-                            locationInfoListByTripId.stream().map(locationInfo -> {
-                                return LocationInfoMapper.mapToLocationInfoSimpleResponse(locationInfo);
-                            }).collect(Collectors.toList());
+                            locationInfoListByTripId
+                                    .stream()
+                                    .map(LocationInfoMapper::mapToLocationInfoSimpleResponse)
+                                    .collect(Collectors.toList());
                     return TripMapper.mapToTripSimpleResponse(trip, locationInfoUserResponseList);
                 });
 
