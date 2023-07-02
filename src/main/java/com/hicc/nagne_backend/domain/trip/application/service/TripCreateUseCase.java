@@ -6,7 +6,6 @@ import com.hicc.nagne_backend.domain.locationimage.application.mapper.LocationIm
 import com.hicc.nagne_backend.domain.locationimage.domain.service.LocationImageSaveService;
 import com.hicc.nagne_backend.domain.locationinfo.application.mapper.LocationInfoMapper;
 import com.hicc.nagne_backend.domain.locationinfo.domain.entity.LocationInfo;
-import com.hicc.nagne_backend.domain.locationinfo.domain.service.AddressConvertLatitudeLongitudeService;
 import com.hicc.nagne_backend.domain.locationinfo.domain.service.LocationInfoSaveService;
 import com.hicc.nagne_backend.domain.s3.infrastructure.S3UploadService;
 import com.hicc.nagne_backend.domain.tag.application.mapper.TagMapper;
@@ -32,14 +31,13 @@ public class TripCreateUseCase {
     private final UserUtils userUtils;
     private final S3UploadService s3UploadService;
     private final LocationImageSaveService locationImageSaveService;
-    private final AddressConvertLatitudeLongitudeService addressConvertLatitudeLongitudeService;
 
     @Transactional
     public void createTrip(TripRequest.TripCreateRequest tripCreateRequest) {
         log.info("여정 생성 요청: {}", tripCreateRequest);
         User user = userUtils.getUser();
-
-        Trip trip = TripMapper.mapToTrip(tripCreateRequest, user);
+        String tripImageUrl = s3UploadService.upload(tripCreateRequest.getTripImage());
+        Trip trip = TripMapper.mapToTrip(tripCreateRequest, tripImageUrl,user);
         tripSaveService.save(trip);
 
         tripCreateRequest.getTag().forEach(tagCreate ->

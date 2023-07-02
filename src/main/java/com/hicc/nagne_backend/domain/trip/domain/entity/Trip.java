@@ -24,6 +24,8 @@ public class Trip extends BaseTimeEntity {
 	private String address;
 	private String title;
 
+	private String tripImageUrl;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -32,9 +34,10 @@ public class Trip extends BaseTimeEntity {
 	private List<BookMark> bookMarks = new ArrayList<>();
 
 	@Builder
-	public Trip(String address, String title, User user) {
+	public Trip(String address, String title, String tripImageUrl, User user) {
 		this.address = address;
 		this.title = title;
+		this.tripImageUrl = tripImageUrl;
 		this.user = user;
 	}
 }
