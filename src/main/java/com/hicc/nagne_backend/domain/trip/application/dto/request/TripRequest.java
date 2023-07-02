@@ -34,5 +34,15 @@ public class TripRequest {
             this.tag = tag;
             this.locationInfo = locationInfo;
         }
+
+        @Override
+        public String toString() {
+            return "TripCreateRequest{" +
+                    "address='" + address + '\'' +
+                    ", title='" + title + '\'' +
+                    ", tag=" + tag +
+                    ", locationInfo=" + locationInfo +
+                    '}';
+        }
     }
 }

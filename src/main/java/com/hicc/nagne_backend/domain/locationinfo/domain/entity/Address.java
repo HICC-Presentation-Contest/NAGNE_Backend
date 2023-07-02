@@ -26,4 +26,13 @@ public class Address {
         this.longitude = longitude;
         this.latitude = latitude;
     }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "placeName='" + placeName + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                '}';
+    }
 }
