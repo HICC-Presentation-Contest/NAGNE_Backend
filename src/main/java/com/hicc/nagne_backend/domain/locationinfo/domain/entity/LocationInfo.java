@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Getter
@@ -39,5 +38,15 @@ public class LocationInfo extends BaseTimeEntity {
         this.address = address;
         this.description = description;
         this.sequence = sequence;
+    }
+
+    @Override
+    public String toString() {
+        return "LocationInfo{" +
+                "id=" + id +
+                ", address=" + address +
+                ", description='" + description + '\'' +
+                ", sequence='" + sequence + '\'' +
+                '}';
     }
 }

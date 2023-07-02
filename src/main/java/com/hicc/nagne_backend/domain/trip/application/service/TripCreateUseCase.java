@@ -17,8 +17,10 @@ import com.hicc.nagne_backend.domain.trip.domain.entity.Trip;
 import com.hicc.nagne_backend.domain.trip.domain.service.TripSaveService;
 import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @UseCase
 @RequiredArgsConstructor
 @Transactional
@@ -34,7 +36,7 @@ public class TripCreateUseCase {
 
     @Transactional
     public void createTrip(TripRequest.TripCreateRequest tripCreateRequest) {
-
+        log.info("여정 생성 요청: {}", tripCreateRequest);
         User user = userUtils.getUser();
 
         Trip trip = TripMapper.mapToTrip(tripCreateRequest, user);
