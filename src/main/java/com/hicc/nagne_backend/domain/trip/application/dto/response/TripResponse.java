@@ -23,14 +23,17 @@ public class TripResponse {
 		private String title;
 		@Schema(description = "여정 지도 이미지", defaultValue = "tripImageUrl")
 		private String tripImageUrl;
+		@Schema(description = "여정 장소 리스트", defaultValue = "locationInfoList")
+		private List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoList;
 
 		@Builder
 		public TripMainPageResponse(Long tripId, String address, String title,
-									String tripImageUrl) {
+									String tripImageUrl, List<LocationInfoResponse.LocationInfoSimpleResponse> locationInfoList) {
 			this.tripId = tripId;
 			this.address = address;
 			this.title = title;
 			this.tripImageUrl = tripImageUrl;
+			this.locationInfoList = locationInfoList;
 		}
 	}
 
