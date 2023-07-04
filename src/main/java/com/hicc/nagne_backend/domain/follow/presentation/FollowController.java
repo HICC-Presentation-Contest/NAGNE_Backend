@@ -52,7 +52,7 @@ public class FollowController {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/follow")
-    public void follow(@RequestParam Long followId){
-        followCreateUseCase.createFollow(followId);
+    public void follow(@RequestParam Long receiverId){
+        followCreateUseCase.createFollow(receiverId);
     }
 }
