@@ -85,7 +85,7 @@ public class TripController {
 			@ApiResponse(responseCode = "404", description = "여행 등록 실패",
 					content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	})
-	@CacheEvict(value = {"tripUser", "tripCount"}, allEntries = true)
+	@CacheEvict(value =  "tripCount", allEntries = true)
 	@PostMapping(value = "/trip", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void createTrip(
 			@Parameter(
@@ -114,7 +114,6 @@ public class TripController {
 					content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
 	})
 	@Parameter(name = "userId", description = "사용자 식별자", in = PATH)
-	@Cacheable(value = "tripUser", key = "#userId")
 	@GetMapping("/trip/user/{userId}")
 	public SliceResponse<TripResponse.TripUserResponse> getTripListByUserId(@PathVariable Long userId, Pageable pageable){
 		return tripUserGetUseCase.getTripListByUserId(userId, pageable);
