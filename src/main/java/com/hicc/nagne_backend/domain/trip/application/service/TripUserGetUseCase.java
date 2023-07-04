@@ -2,6 +2,7 @@ package com.hicc.nagne_backend.domain.trip.application.service;
 
 import com.hicc.nagne_backend.common.annotation.UseCase;
 import com.hicc.nagne_backend.common.slice.SliceResponse;
+import com.hicc.nagne_backend.common.util.UserUtils;
 import com.hicc.nagne_backend.domain.bookmark.domain.service.BookMarkQueryService;
 import com.hicc.nagne_backend.domain.locationinfo.application.dto.response.LocationInfoResponse;
 import com.hicc.nagne_backend.domain.locationinfo.application.mapper.LocationInfoMapper;
@@ -11,6 +12,7 @@ import com.hicc.nagne_backend.domain.trip.application.dto.response.TripResponse;
 import com.hicc.nagne_backend.domain.trip.application.mapper.TripMapper;
 import com.hicc.nagne_backend.domain.trip.domain.entity.Trip;
 import com.hicc.nagne_backend.domain.trip.domain.service.TripQueryService;
+import com.hicc.nagne_backend.domain.user.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class TripUserGetUseCase {
 
+    private final UserUtils userUtils;
     private final TripQueryService tripQueryService;
     private final LocationInfoQueryService locationInfoQueryService;
     private final BookMarkQueryService bookMarkQueryService;
@@ -46,9 +49,10 @@ public class TripUserGetUseCase {
 
     public SliceResponse<TripResponse.TripUserResponse> getTripListByUserId(final Long userId, Pageable pageable){
         final Slice<Trip> tripList = tripQueryService.findByUserId(userId, pageable);
+        final User user = userUtils.getUser();
         final Slice<TripResponse.TripUserResponse> tripUserResponseSlice = tripList.map(trip -> {
             final Long tripId = trip.getId();
-            final boolean isBookMark = bookMarkQueryService.existsByUserIdAndTripId(userId, tripId);
+            final boolean isBookMark = bookMarkQueryService.existsByUserIdAndTripId(user.getId(), tripId);
             return TripMapper.mapToTripUserResponse(trip, isBookMark);
         });
         return SliceResponse.of(tripUserResponseSlice);
