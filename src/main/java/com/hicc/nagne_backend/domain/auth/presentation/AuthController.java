@@ -48,4 +48,15 @@ public class AuthController {
     public JwtTokenResponse googleLogin(@RequestParam("code") String code) {
         return googleOAuthService.login(code);
     }
+
+    @Operation(summary = "구글 로그인 OAuth accessToken으로 로그인", description = "구글 로그인 OAuth accessToken으로 로그인")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "구글 로그인 성공"),
+            @ApiResponse(responseCode = "400", description = "구글 로그인 실패",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/login/oauth2/google/access-token")
+    public JwtTokenResponse googleLoginWithAccessToken(@RequestParam String accessToken){
+        return googleOAuthService.loginWithAccessToken(accessToken);
+    }
 }
