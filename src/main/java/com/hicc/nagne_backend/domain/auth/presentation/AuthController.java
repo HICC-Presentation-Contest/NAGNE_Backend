@@ -1,6 +1,8 @@
 package com.hicc.nagne_backend.domain.auth.presentation;
 
 import com.hicc.nagne_backend.common.consts.ApplicationConst;
+import com.hicc.nagne_backend.common.exception.BusinessException;
+import com.hicc.nagne_backend.common.exception.Error;
 import com.hicc.nagne_backend.common.exception.dto.ErrorResponse;
 import com.hicc.nagne_backend.common.security.jwt.JwtProvider;
 import com.hicc.nagne_backend.common.util.HeaderUtils;
@@ -14,14 +16,22 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
 
+    @Value("${frontend.url}")
+    private String FRONTEND_URL;
     private final GoogleOAuthService googleOAuthService;
     private final JwtProvider jwtProvider;
 
@@ -45,8 +55,17 @@ public class AuthController {
             content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/login/oauth2/google")
-    public JwtTokenResponse googleLogin(@RequestParam("code") String code) {
-        return googleOAuthService.login(code);
+    public void googleLogin(@RequestParam("code") String code, HttpServletResponse response) {
+        JwtTokenResponse jwtTokenResponse = googleOAuthService.login(code);
+        try{
+            response.sendRedirect(UriComponentsBuilder.fromUriString(FRONTEND_URL)
+                    .queryParam("accessToken", jwtTokenResponse.getAccessToken())
+                    .queryParam("refreshToken", jwtTokenResponse.getRefreshToken()).build()
+                    .encode(StandardCharsets.UTF_8)
+                    .toUriString());
+        } catch (IOException e) {
+            throw new BusinessException(Error.OAUTH_NOT_FOUND);
+        }
     }
 
     @Operation(summary = "구글 로그인 OAuth accessToken으로 로그인", description = "구글 로그인 OAuth accessToken으로 로그인")
