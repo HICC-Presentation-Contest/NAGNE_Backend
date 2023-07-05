@@ -19,7 +19,10 @@ public enum Error {
 	KAKAO_MAP_ERROR("카카오 맵 API 요청에 실패하였습니다.", 3000),
 
 	// location image
-	LOCATION_IMAGE_NOT_FOUND("해당 위치에 이미지가 존재하지 않습니다.", 4000);
+	LOCATION_IMAGE_NOT_FOUND("해당 위치에 이미지가 존재하지 않습니다.", 4000),
+
+	//Oauth
+	OAUTH_NOT_FOUND("존재하지 않는 Oauth 입니다.", 5000);
 
 	private final String message;
 	private final int errorCode;
