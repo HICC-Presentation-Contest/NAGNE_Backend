@@ -38,7 +38,6 @@ public class KakaoLatitudeLongitudeConvertAddressServiceImpl implements Latitude
         final String encodeLatitude = getEncode(latitude);
         final String url = getKakaoMapApiUrl(encodeLongitude, encodeLatitude);
         final URI uri = getUri(url);
-        System.out.println(uri);
         final ResponseEntity<String> simpleResponse = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
         final JSONArray documents = getJsonArray(simpleResponse);
         final KakaoMapResponse kakaoMapResponse = parseKakaoMapResponse(documents);
