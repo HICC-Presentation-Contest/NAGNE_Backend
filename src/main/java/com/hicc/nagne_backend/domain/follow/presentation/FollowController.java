@@ -3,6 +3,7 @@ package com.hicc.nagne_backend.domain.follow.presentation;
 import com.hicc.nagne_backend.common.exception.dto.ErrorResponse;
 import com.hicc.nagne_backend.common.slice.SliceResponse;
 import com.hicc.nagne_backend.domain.follow.application.dto.response.FollowResponse;
+import com.hicc.nagne_backend.domain.follow.application.service.FollowCheckUseCase;
 import com.hicc.nagne_backend.domain.follow.application.service.FollowCreateUseCase;
 import com.hicc.nagne_backend.domain.follow.application.service.FollowerGetUseCase;
 import com.hicc.nagne_backend.domain.follow.application.service.FollowingGetUseCase;
@@ -22,6 +23,7 @@ public class FollowController {
     private final FollowerGetUseCase followerGetUseCase;
     private final FollowingGetUseCase followingGetUseCase;
     private final FollowCreateUseCase followCreateUseCase;
+    private final FollowCheckUseCase followCheckUseCase;
 
     @Operation(summary = "팔로워 조회", tags = {"FollowController"})
     @ApiResponses({
@@ -54,5 +56,16 @@ public class FollowController {
     @PostMapping("/follow")
     public void follow(@RequestParam Long receiverId){
         followCreateUseCase.createFollow(receiverId);
+    }
+
+    @Operation(summary = "팔로우 여부 확인", tags = {"FollowController"})
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "팔로우 여부 확인 성공"),
+            @ApiResponse(responseCode = "404", description = "팔로우 여부 확인 실패",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    @GetMapping("/follow/check")
+    public boolean checkFollow(@RequestParam Long receiverId){
+        return followCheckUseCase.checkFollow(receiverId);
     }
 }
