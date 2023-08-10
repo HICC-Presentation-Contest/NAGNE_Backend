@@ -50,14 +50,13 @@ jobs:
 
       - name: Build With Gradle
         run: ./gradlew build
-
-      - name: Docker build & Push
-        env:
-          DOCKER_PATH : .deploy/Dockerfile
-        run: |
-          docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f $DOCKER_PATH -t ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPO }} .
-          docker push ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPO }}
+        
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_ID }}/my_recipe:latest
 
       - name: Deploy to Prob
         uses: appleboy/ssh-action@master
